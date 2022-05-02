@@ -1,0 +1,60 @@
+﻿@model IEnumerable<ProjetoUsuarios.Models.Endereco>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Endereços</h1>
+
+<p>
+    <a asp-action="Create">Novo endereço</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Bairro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cidade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnredecoCompleto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Numero)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bairro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cidade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnredecoCompleto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Numero)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EnderecoId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.EnderecoId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.EnderecoId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
