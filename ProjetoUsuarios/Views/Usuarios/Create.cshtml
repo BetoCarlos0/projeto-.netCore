@@ -9,35 +9,72 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
-                <input asp-for="Nome" id="floatingInput" class="form-control" placeholder="Nome" />
-                <label asp-for="Nome" for="floatingInput" class="control-label"></label>
-                <span asp-validation-for="Nome" class="text-danger"></span>
+
+            <div class="user">
+                <div class="form-floating">
+                    <input asp-for="Nome" id="floatingInput" class="form-control" placeholder="Nome" />
+                    <label asp-for="Nome" for="floatingInput" class="control-label"></label>
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+                <div class="form-floating">
+                    <input asp-for="Sobrenome" id="floatingInput" class="form-control" placeholder="Sobrenome" />
+                    <label asp-for="Sobrenome" for="floatingInput" class="control-label"></label>
+                    <span asp-validation-for="Sobrenome" class="text-danger"></span>
+                </div>
+                <div class="form-floating">
+                    <input asp-for="DataNascimento" id="floatingInput" class="form-control" placeholder="DataNascimento" />
+                    <label asp-for="DataNascimento" for="floatingInput" class="control-label"></label>
+                    <span asp-validation-for="DataNascimento" class="text-danger"></span>
+                </div>
+                <div class="form-floating">
+                    <input asp-for="Email" id="floatingInput" class="form-control" placeholder="Email" />
+                    <label asp-for="Email" for="floatingInput" class="control-label"></label>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-floating">
+                    <input asp-for="Telefone" id="floatingInput" class="form-control" placeholder="Telefone" />
+                    <label asp-for="Telefone" for="floatingInput" class="control-label"></label>
+                    <span asp-validation-for="Telefone" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-floating">
-                <input asp-for="Sobrenome" id="floatingInput" class="form-control" placeholder="Sobrenome" />
-                <label asp-for="Sobrenome" for="floatingInput" class="control-label"></label>
-                <span asp-validation-for="Sobrenome" class="text-danger"></span>
+
+            <div class="mail-address">
+                <div class="form-floating">
+                    <input asp-for="Endereco.Bairro" id="floatingInput" class="form-control" placeholder="Endereco.Bairro" />
+                    <label asp-for="Endereco.Bairro" for="floatingInput" class="control-label"></label>
+                    <span asp-validation-for="Endereco.Bairro" class="text-danger"></span>
+                </div>
+                <div class="form-floating">
+                    <input asp-for="Endereco.Numero" id="floatingInput" class="form-control" placeholder="Endereco.Numero" />
+                    <label asp-for="Endereco.Numero" for="floatingInput" class="control-label"></label>
+                    <span asp-validation-for="Endereco.Numero" class="text-danger"></span>
+                </div>
+                <div class="form-floating">
+                    <input asp-for="Endereco.Cidade" id="floatingInput" class="form-control" placeholder="Endereco.Cidade" />
+                    <label asp-for="Endereco.Cidade" for="floatingInput" class="control-label"></label>
+                    <span asp-validation-for="Endereco.Cidade" class="text-danger"></span>
+                </div>
+                <div class="form-floating">
+                    <input asp-for="Endereco.Estado" id="floatingInput" class="form-control" placeholder="Endereco.Estado" />
+                    <label asp-for="Endereco.Estado" for="floatingInput" class="control-label"></label>
+                    <span asp-validation-for="Endereco.Estado" class="text-danger"></span>
+                </div>
+                <div class="form-floating">
+                    <input asp-for="Endereco.Logradouro" id="floatingInput" class="form-control" placeholder="Endereco.Logradouro" />
+                    <label asp-for="Endereco.Logradouro" for="floatingInput" class="control-label"></label>
+                    <span asp-validation-for="Endereco.Logradouro" class="text-danger"></span>
+                </div>
+                <div class="form-floating">
+                    <input asp-for="Endereco.CEP" id="floatingInput" class="form-control" placeholder="Endereco.CEP" />
+                    <label asp-for="Endereco.CEP" for="floatingInput" class="control-label"></label>
+                    <span asp-validation-for="Endereco.CEP" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-floating">
-                <input asp-for="DataNascimento" id="floatingInput" class="form-control" placeholder="DataNascimento" />
-                <label asp-for="DataNascimento" for="floatingInput" class="control-label"></label>
-                <span asp-validation-for="DataNascimento" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Email" id="floatingInput" class="form-control" placeholder="Email" />
-                <label asp-for="Email" for="floatingInput" class="control-label"></label>
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input asp-for="Telefone" id="floatingInput" class="form-control" placeholder="Telefone" />
-                <label asp-for="Telefone" for="floatingInput" class="control-label"></label>
-                <span asp-validation-for="Telefone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+
+            <div class="form-group d-grid gap-2 button">
                 <input type="submit" value="Criar" class="btn btn-primary" />
             </div>
         </form>

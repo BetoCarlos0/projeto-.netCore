@@ -8,7 +8,7 @@
 <h1>Usuários</h1>
 
 <p>
-    <a asp-action="Create">Novo Usuário</a>
+    <a asp-action="Create" class="btn btn-success">Novo Usuário</a>
 </p>
 <table class="table">
     <thead>
@@ -50,9 +50,9 @@
                 @Html.DisplayFor(modelItem => item.Telefone)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.UsuarioId">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.UsuarioId">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.UsuarioId">Deletar</a>
+                <a asp-action="Edit" asp-route-id="@item.UsuarioId" class="btn btn-outline-warning">Editar</a>
+                <a asp-action="Details" asp-route-id="@item.UsuarioId" class="btn btn-outline-info">Detalhes</a>
+                <a asp-action="Delete" asp-route-id="@item.UsuarioId" class="btn btn-outline-danger">Deletar</a>
             </td>
         </tr>
 }

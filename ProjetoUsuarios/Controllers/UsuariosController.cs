@@ -22,7 +22,10 @@ namespace ProjetoUsuarios.Controllers
         // GET: Usuarios
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Usuario.ToListAsync());
+            return View(await _context.Usuario
+                .Include(x => x.Endereco)
+                .AsNoTracking()
+                .ToListAsync());
         }
 
         // GET: Usuarios/Details/5
@@ -34,6 +37,8 @@ namespace ProjetoUsuarios.Controllers
             }
 
             var usuario = await _context.Usuario
+                .Include(x => x.Endereco)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.UsuarioId== id);
             if (usuario == null)
             {
@@ -51,7 +56,7 @@ namespace ProjetoUsuarios.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Sobrenome,DataNascimento,Email,Telefone")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("UsuarioId,Nome,Sobrenome,DataNascimento,Email,Telefone,Endereco")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
@@ -70,7 +75,10 @@ namespace ProjetoUsuarios.Controllers
                 return NotFound();
             }
 
-            var usuario = await _context.Usuario.FindAsync(id);
+            var usuario = await _context.Usuario
+                .Include(x => x.Endereco)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.UsuarioId == id);
             if (usuario == null)
             {
                 return NotFound();
@@ -80,34 +88,37 @@ namespace ProjetoUsuarios.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Sobrenome,DataNascimento,Email,Telefone")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("UsuarioId,Nome,Sobrenome,DataNascimento,Email,Telefone,Endereco")] Usuario usuario)
         {
             if (id != usuario.UsuarioId)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (usuario.Endereco.EnderecoId == 0)
             {
-                try
-                {
-                    _context.Update(usuario);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UsuarioExists(usuario.UsuarioId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                _context.Add(usuario.Endereco);
+                await _context.SaveChangesAsync();
             }
-            return View(usuario);
+
+            try
+            {
+                _context.Update(usuario);
+
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UsuarioExists(usuario.UsuarioId))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Usuarios/Delete/5

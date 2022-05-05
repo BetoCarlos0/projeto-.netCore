@@ -28,24 +28,35 @@ namespace ProjetoUsuarios.Migrations
 
                     b.Property<string>("Bairro")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("CEP")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Cidade")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EnredecoCompleto")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Estado")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Logradouro")
+                        .IsRequired()
+                        .HasColumnType("varchar(120)");
 
                     b.Property<int>("Numero")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UsuarioId")
+                        .HasColumnType("int");
+
                     b.HasKey("EnderecoId");
+
+                    b.HasIndex("UsuarioId")
+                        .IsUnique()
+                        .HasFilter("[UsuarioId] IS NOT NULL");
 
                     b.ToTable("Endereco");
                 });
@@ -62,46 +73,37 @@ namespace ProjetoUsuarios.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("EnderecoId")
-                        .HasColumnType("int");
+                        .HasColumnType("varchar(70)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Sobrenome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Telefone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(30)");
 
                     b.HasKey("UsuarioId");
-
-                    b.HasIndex("EnderecoId")
-                        .IsUnique();
 
                     b.ToTable("Usuario");
                 });
 
-            modelBuilder.Entity("ProjetoUsuarios.Models.Usuario", b =>
-                {
-                    b.HasOne("ProjetoUsuarios.Models.Endereco", "Endereco")
-                        .WithOne("Usuario")
-                        .HasForeignKey("ProjetoUsuarios.Models.Usuario", "EnderecoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Endereco");
-                });
-
             modelBuilder.Entity("ProjetoUsuarios.Models.Endereco", b =>
                 {
-                    b.Navigation("Usuario")
-                        .IsRequired();
+                    b.HasOne("ProjetoUsuarios.Models.Usuario", "Usuario")
+                        .WithOne("Endereco")
+                        .HasForeignKey("ProjetoUsuarios.Models.Endereco", "UsuarioId");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("ProjetoUsuarios.Models.Usuario", b =>
+                {
+                    b.Navigation("Endereco");
                 });
 #pragma warning restore 612, 618
         }

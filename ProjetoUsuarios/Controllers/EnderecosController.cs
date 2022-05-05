@@ -51,7 +51,7 @@ namespace ProjetoUsuarios.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Bairro,Cidade,Estado,EnredecoCompleto,Numero")] Endereco endereco)
+        public async Task<IActionResult> Create([Bind("EnderecoId,Bairro,Numero,Cidade,Estado,Logradouro,CEP")] Endereco endereco)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace ProjetoUsuarios.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Bairro,Cidade,Estado,EnredecoCompleto,Numero")] Endereco endereco)
+        public async Task<IActionResult> Edit(int id, [Bind("EnderecoId,Bairro,Numero,Cidade,Estado,Logradouro,CEP,UsuarioId")] Endereco endereco)
         {
             if (id != endereco.EnderecoId)
             {
