@@ -29,8 +29,18 @@ namespace Mercado
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+            });
+
             services.AddDbContext<MercadoDbContext>(
-                options => options.UseInMemoryDatabase("sql"));
+                options => options.UseSqlServer(Configuration.GetConnectionString("Mercado")));
 
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<MercadoDbContext>();
         }

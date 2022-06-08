@@ -1,0 +1,41 @@
+﻿@model Mercado.Models.Account.Register
+@{
+    ViewData["Title"] = "Cadastro de novos usuários";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            @*adicionado os novos campos*@
+            <div class="form-floating mb-3">
+                <input id="floatingInput" asp-for="Name" class="form-control" placeholder="Name" />
+                <label for="floatingInput" asp-for="Name"></label>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input id="floatingInput" asp-for="Email" class="form-control" placeholder="Email" />
+                <label for="floatingInput" asp-for="Email"></label>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input id="floatingInput" asp-for="Password" class="form-control" placeholder="Password"/>
+                <label for="floatingInput" asp-for="Password"></label>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input id="floatingInput" asp-for="ConfirmPassword" class="form-control" placeholder="ConfirmPassword"/>
+                <label for="floatingInput" asp-for="ConfirmPassword"></label>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
