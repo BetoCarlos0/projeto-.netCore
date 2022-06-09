@@ -12,7 +12,8 @@ namespace Mercado.Data
 
         }
 
-        //public DbSet<Usuarios> Usuarios { get; set; }
+        public DbSet<Fornecedor> Fornecedor { get; set; }
+        public DbSet<Produto> Produto { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

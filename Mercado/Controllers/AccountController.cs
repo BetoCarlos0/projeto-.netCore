@@ -26,9 +26,9 @@ namespace Mercado.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(Login model)
         {
-            if (!ModelState.IsValid) return BadRequest(new ValidationProblemDetails(ModelState));
+            if (!ModelState.IsValid) return View(model);
 
-            var result = await _signInManager.PasswordSignInAsync(model.Name, model.Password, model.RememberMe, false);
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
             if (result.Succeeded)
                 return RedirectToAction("index", "home");
@@ -45,12 +45,12 @@ namespace Mercado.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(Register model)
         {
-            if (!ModelState.IsValid) return BadRequest(new ValidationProblemDetails(ModelState));
+            if (!ModelState.IsValid) return View(model);
 
             var user = new IdentityUser
             {
-                UserName = model.Name,
                 Email = model.Email,
+                UserName = model.Email,
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);

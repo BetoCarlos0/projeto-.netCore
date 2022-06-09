@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mercado.Models.Account
 {
@@ -7,9 +8,6 @@ namespace Mercado.Models.Account
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-
-        [Required]
-        public string Name { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

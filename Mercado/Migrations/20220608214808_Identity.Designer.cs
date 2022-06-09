@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Mercado.Migrations
 {
     [DbContext(typeof(MercadoDbContext))]
-    [Migration("20220608121547_Identity")]
+    [Migration("20220608214808_Identity")]
     partial class Identity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
