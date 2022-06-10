@@ -1,11 +1,11 @@
 ﻿@model Mercado.Models.Provider
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Novo Fornecedor";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>Novo</h1>
 
 <h4>Fornecedor</h4>
 <hr />
@@ -13,35 +13,35 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
+            <div class="form-floating">
+                <input id="floatingInput" asp-for="Phone" class="form-control" placeholder="Phone" />
+                <label for="floatingInput" asp-for="Phone"></label>
                 <span asp-validation-for="Phone" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Company" class="control-label"></label>
-                <input asp-for="Company" class="form-control" />
+            <div class="form-floating">
+                <input id="floatingInput" asp-for="Company" class="form-control" placeholder="Company" />
+                <label for="floatingInput" asp-for="Company"></label>
                 <span asp-validation-for="Company" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
+            <div class="form-floating">
+                <input id="floatingInput" asp-for="Email" class="form-control" placeholder="Email" />
+                <label for="floatingInput" asp-for="Email"></label>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Activity" class="control-label"></label>
-                <input asp-for="Activity" class="form-control" />
+            <div class="form-floating">
+                <input id="floatingInput" asp-for="Activity" class="form-control" placeholder="Activity" />
+                <label for="floatingInput" asp-for="Activity"></label>
                 <span asp-validation-for="Activity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Criar" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar para Lista</a>
 </div>
 
 @section Scripts {

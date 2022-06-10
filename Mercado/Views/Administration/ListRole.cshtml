@@ -9,10 +9,10 @@
 <h1>Funções</h1>
 
 <p>
-    <a asp-action="CreateRole"> Criar Função</a>
+    <a class="btn btn-success" asp-action="CreateRole">Criar Função</a>
 </p>
 <table class="table">
-    <thead>
+    <thead class="bg-dark text-white">
         <tr>
             <th>
                 Nome
@@ -26,11 +26,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
-                <a asp-action="EditRole" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="DeleteRole" asp-route-id="@item.Id">Delete</a>
+            <td class="crud-button">
+                <a class="btn btn-outline-primary" asp-action="EditRole" asp-route-id="@item.Id">Editar</a>
+                <a class="btn btn-outline-danger" asp-action="DeleteRole" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>

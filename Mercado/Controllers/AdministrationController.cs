@@ -195,7 +195,7 @@ namespace Mercado.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> DeleteRole(string? id)
+        public async Task<IActionResult> DeleteRole(string id)
         {
             if (id == null)
             {
