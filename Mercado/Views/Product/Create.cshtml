@@ -1,4 +1,4 @@
-﻿@model Mercado.Models.Produto
+﻿@model Mercado.Models.Product
 
 @{
     ViewData["Title"] = "Create";
@@ -30,8 +30,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="Fornecedor" class="control-label"></label>
-                @*<select asp-for="Fornecedor.Company" class ="form-control" asp-items="Fornecedor"></select>*@
-                @Html.DropDownList("Fornecedor", (List<Fornecedor>)ViewData["Fornecedor"])
+                <select asp-for="ProviderId" class ="form-control" >
+                    
+                    @foreach (var item in ViewData["Provider"] as List<Mercado.Models.Provider>)
+                   {
+                        <option value="@item.Id">@item.Company</option>
+                   }
+                </select>
+                <span asp-validation-for="ProviderId" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

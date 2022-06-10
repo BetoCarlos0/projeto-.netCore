@@ -3,14 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Mercado.Models.Account
 {
-    public class Login
+    public class LoginViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Email Vazio"), EmailAddress(ErrorMessage = "Email Inválido")]
         public string Email { get; set; }
 
-        [Required]
-        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "Senha Vazia"), DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Display(Name = "Lembrar-me")]

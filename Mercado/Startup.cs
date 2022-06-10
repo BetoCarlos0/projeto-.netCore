@@ -1,4 +1,5 @@
 using Mercado.Data;
+using Mercado.Data.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -42,7 +43,7 @@ namespace Mercado
             services.AddDbContext<MercadoDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("Mercado")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<MercadoDbContext>();
+            services.AddIdentity<UserCustom, IdentityRole>().AddEntityFrameworkStores<MercadoDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

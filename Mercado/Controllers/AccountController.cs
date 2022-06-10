@@ -1,20 +1,26 @@
-﻿using Mercado.Models.Account;
+﻿using Mercado.Data;
+using Mercado.Data.Identity;
+using Mercado.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace Mercado.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<UserCustom> _userManager;
+        private readonly SignInManager<UserCustom> _signInManager;
+        private readonly MercadoDbContext _mercadoDb;
 
-        public AccountController(UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<UserCustom> userManager,
+            SignInManager<UserCustom> signInManager,
+            MercadoDbContext mercadoDb)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _mercadoDb = mercadoDb;
         }
 
         [HttpGet]
@@ -24,14 +30,19 @@ namespace Mercado.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(Login model)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid) return View(model);
 
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
             if (result.Succeeded)
-                return RedirectToAction("index", "home");
+            {
+                if (Url.IsLocalUrl(returnUrl))
+                    return Redirect(returnUrl);
+                else
+                    return RedirectToAction("index", "home");
+            }
 
             return View(model);
         }
@@ -43,12 +54,13 @@ namespace Mercado.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(Register model)
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
 
-            var user = new IdentityUser
+            var user = new UserCustom
             {
+                Name = model.Name,
                 Email = model.Email,
                 UserName = model.Email,
             };
@@ -69,6 +81,23 @@ namespace Mercado.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("index", "home");
+        }
+
+        [AcceptVerbs("Get", "Post")]
+        public async Task<IActionResult> IsEmailUse(string email)
+        {
+            var user = await _mercadoDb.Users.FirstOrDefaultAsync(x => x.Email.Equals(email));
+
+            if (user == null)
+                return Json(true);
+            else
+                return Json($"{email} já utilizado");
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

@@ -10,22 +10,23 @@ using Mercado.Models;
 
 namespace Mercado.Controllers
 {
-    public class FornecedorController : Controller
+    public class ProductController : Controller
     {
         private readonly MercadoDbContext _context;
 
-        public FornecedorController(MercadoDbContext context)
+        public ProductController(MercadoDbContext context)
         {
             _context = context;
         }
 
-        // GET: Fornecedor
+        // GET: Produto
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Fornecedor.ToListAsync());
+            var produtos = _context.Product.Include(p => p.Fornecedor).ToListAsync();
+            return View(await produtos);
         }
 
-        // GET: Fornecedor/Details/5
+        // GET: Produto/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,40 @@ namespace Mercado.Controllers
                 return NotFound();
             }
 
-            var fornecedor = await _context.Fornecedor
+            var produto = await _context.Product
+                .Include(p => p.Fornecedor)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (fornecedor == null)
+            if (produto == null)
             {
                 return NotFound();
             }
 
-            return View(fornecedor);
+            return View(produto);
         }
 
-        // GET: Fornecedor/Create
-        public IActionResult Create()
+        // GET: Produto/Create
+        public async Task<IActionResult> Create()
         {
+            ViewData["Provider"] = await _context.Provider.ToListAsync();
+
             return View();
         }
 
-        // POST: Fornecedor/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Phone,Company,Email,Activity")] Fornecedor fornecedor)
+        public async Task<IActionResult> Create([Bind("Id,Name,Quantity,Price,ProviderId")] Product produto)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(fornecedor);
+                _context.Add(produto);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(fornecedor);
+            ViewData["Provider"] = new SelectList(_context.Provider, "Id", "Company", produto.ProviderId);
+            return View(produto);
         }
 
-        // GET: Fornecedor/Edit/5
+        // GET: Produto/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +75,20 @@ namespace Mercado.Controllers
                 return NotFound();
             }
 
-            var fornecedor = await _context.Fornecedor.FindAsync(id);
-            if (fornecedor == null)
+            var produto = await _context.Product.FindAsync(id);
+            if (produto == null)
             {
                 return NotFound();
             }
-            return View(fornecedor);
+            ViewData["Provider"] = await _context.Provider.ToListAsync();
+            return View(produto);
         }
 
-        // POST: Fornecedor/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Phone,Company,Email,Activity")] Fornecedor fornecedor)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Quantity,Price,ProviderId")] Product produto)
         {
-            if (id != fornecedor.Id)
+            if (id != produto.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace Mercado.Controllers
             {
                 try
                 {
-                    _context.Update(fornecedor);
+                    _context.Update(produto);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FornecedorExists(fornecedor.Id))
+                    if (!ProdutoExists(produto.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,11 @@ namespace Mercado.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(fornecedor);
+            ViewData["ProviderId"] = new SelectList(_context.Provider, "Id", "Id", produto.ProviderId);
+            return View(produto);
         }
 
-        // GET: Fornecedor/Delete/5
+        // GET: Produto/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +125,31 @@ namespace Mercado.Controllers
                 return NotFound();
             }
 
-            var fornecedor = await _context.Fornecedor
+            var produto = await _context.Product
+                .Include(p => p.Fornecedor)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (fornecedor == null)
+            if (produto == null)
             {
                 return NotFound();
             }
 
-            return View(fornecedor);
+            return View(produto);
         }
 
-        // POST: Fornecedor/Delete/5
+        // POST: Produto/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var fornecedor = await _context.Fornecedor.FindAsync(id);
-            _context.Fornecedor.Remove(fornecedor);
+            var produto = await _context.Product.FindAsync(id);
+            _context.Product.Remove(produto);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FornecedorExists(int id)
+        private bool ProdutoExists(int id)
         {
-            return _context.Fornecedor.Any(e => e.Id == id);
+            return _context.Product.Any(e => e.Id == id);
         }
     }
 }

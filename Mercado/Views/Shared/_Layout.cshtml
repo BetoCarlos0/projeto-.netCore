@@ -1,9 +1,10 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-
+﻿@using Mercado.Data.Identity
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<UserCustom> SignInManager
+@inject UserManager<UserCustom> UserManager
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="utf-8" />
@@ -17,52 +18,59 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Mercado</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Fornecedor"
-                                asp-action="Index">Fornecedor</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Produto"
-                                asp-action="Index">Produtos</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav user-nav">
-                        @if (SignInManager.IsSignedIn(User))
-                        {
+    <header class="p-3 bg-dark text-white">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a class="navbar-brand logo" asp-area="" asp-controller="Home" asp-action="Index">Mercado
+                    <img src="~/images/logo.png" />
+                </a>
+
+                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a id="manage" class="nav-link text-dark" title="Manage">Olá @(User.Identity.Name)!</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Provider" asp-action="Index">Fornecedor</a>
                             </li>
                             <li class="nav-item">
-                                <form id="logoutForm" asp-controller="account" asp-action="logout" class="form-inline">
-                                    <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Sair</button>
-                                </form>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Produtos</a>
                             </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account"
-                                asp-action="Login">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account"
-                                asp-action="Register">Cadastrar</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
+                        </ul>
+                        <ul class="navbar-nav user-nav">
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark">Olá @((await UserManager.GetUserAsync(User)).Name)!</a>
+                                </li>
+                                if (User.IsInRole("Administrador"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Administration" asp-action="ListRole">Funções</a>
+                                    </li>
+                                }
+                                <li class="nav-item">
+                                    <form id="logoutForm" asp-controller="account" asp-action="logout" class="form-inline">
+                                        <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Sair</button>
+                                    </form>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Cadastrar</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </nav>
             </div>
-        </nav>
+        </div>
     </header>
     <div class="container">
         <main role="main" class="pb-3">

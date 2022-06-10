@@ -1,4 +1,4 @@
-﻿@model Mercado.Models.Account.Login
+﻿@model Mercado.Models.Account.LoginViewModel
 @{
     ViewData["Title"] = "Login";
 }
@@ -48,6 +48,6 @@
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
