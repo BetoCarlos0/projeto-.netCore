@@ -4,30 +4,30 @@
     ViewData["Title"] = "Editar Função";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container form-config-role">
 
-<h1>Editar Função</h1>
-
-<h4>Funções</h4>
-<hr />
-<div class="row">
+    <h4>@ViewData["Title"]</h4>
+    <hr />
     <div>
         <form asp-action="EditRole" class="form-role">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-field">
+                <h4>Função</h4>
+
                 <div class="form-floating">
                     <input id="floatingInput"  asp-for="RoleName" class="form-control" placeholder="RoleName" />
                     <label for="floatingInput" asp-for="RoleName" ></label>
                     <span asp-validation-for="RoleName" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Salvar" class="btn btn-primary" />
+                    <button type="submit" class="btn btn-primary">Atualizar</button>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-header">
-                    <h3>Usuários desta função</h3>
+                    <h4>Usuários desta função</h3>
                 </div>
                 <div class="card-body">
                     @if (Model.Users.Any())
@@ -42,16 +42,16 @@
                         <h5 class="card-title">Nenhum Usuário</h5>
                     }
                 </div>
-                <div class="card-footer">
+                <div class="card-footer link">
                     <a asp-action="EditUsersInRole" asp-route-roleId="@Model.Id">Adicionar ou remover Usuários</a>
                 </div>
             </div>
         </form>
     </div>
-</div>
 
-<div>
-    <a asp-action="ListRole">Votlar para Lista</a>
+    <div>
+        <a asp-action="ListRole">Votlar para Lista</a>
+    </div>
 </div>
 
 @section Scripts {

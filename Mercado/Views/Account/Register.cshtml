@@ -1,16 +1,15 @@
 ﻿@model Mercado.Models.Account.RegisterViewModel
 @{
-    ViewData["Title"] = "Cadastro de novos usuários";
+    ViewData["Title"] = "Cadastro";
 }
-<h1>@ViewData["Title"]</h1>
 
-<div class="row">
-    <div class="col-md-4">
+<div class="container account">
+    <h1>@ViewData["Title"]</h1>
+    <section>
         <form method="post">
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
 
-            @*adicionado os novos campos*@
             <div class="form-floating mb-3">
                 <input id="floatingInput" asp-for="Name" class="form-control" placeholder="Email" />
                 <label for="floatingInput" asp-for="Name"></label>
@@ -33,7 +32,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Cadastrar</button>
         </form>
-    </div>
+    </section>
 </div>
 
 @section Scripts {

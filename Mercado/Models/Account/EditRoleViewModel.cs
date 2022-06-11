@@ -12,7 +12,7 @@ namespace Mercado.Models.Account
 
         public string Id { get; set; }
 
-        [Required(ErrorMessage = "Função Vazia")]
+        [Required(ErrorMessage = "Função Vazia"), Display(Name = "Função")]
         public string RoleName { get; set; }
 
         public List<string> Users { get; set; }

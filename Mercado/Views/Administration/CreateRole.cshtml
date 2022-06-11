@@ -2,19 +2,23 @@
 @{
     ViewBag.Title = "Nova Função";
 }
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="CreateRole" method="post" class="mt-3">
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-floating mb-3">
-                <input id="floatingInput" asp-for="RoleName" class="form-control" placeholder="Email" />
-                <label for="floatingInput" asp-for="RoleName"></label>
-                <span asp-validation-for="RoleName" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-primary">Criar</button>
-        </form>
+
+<div class="container form-config">
+    <h4>@ViewData["Title"]</h4>
+
+    <form asp-action="CreateRole" method="post" class="mt-3">
+        <hr />
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-floating mb-3">
+            <input id="floatingInput" asp-for="RoleName" class="form-control" placeholder="Email" />
+            <label for="floatingInput" asp-for="RoleName"></label>
+            <span asp-validation-for="RoleName" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Criar</button>
+        
+    </form>
+    <div class="back-list">
+        <a asp-action="ListRole">Votlar para Lista</a>
     </div>
 </div>
 @section Scripts {

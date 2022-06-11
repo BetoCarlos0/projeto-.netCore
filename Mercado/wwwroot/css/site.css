@@ -22,20 +22,37 @@ header .logo p{
   display: inline;
   margin-right: 10px;
 }
+header ul li{
+  font-size: 1.2rem;
+}
 
 body{
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background-color: #b9a0ff;
+  background-image: linear-gradient(19deg, #c4a8ff 0%, #d4efff 100%);
+
 }
 
-.main{
+body > main{
   flex: 1;
-  max-width: 900px;
+}
+.table {
+  box-shadow: 5px 10px 30px #a49cf6;
+}
+
+.table tbody{
+  background-color: white;
 }
 
 .table tbody tr:hover{
-  background-color: aliceblue;
+  transition: 0.4s;
+  background-color: rgb(238, 245, 255);
+}
+
+.table tbody a:hover{
+  fill: red;
 }
 
 .table .crud-button{
@@ -63,11 +80,73 @@ body{
   margin-bottom: 10px;
 }
 
-.form-group input{
+/* account
+-------------------------------------------------- */
+
+body .account {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+body .account h1{
+  text-align: center;
+}
+body .account button{
   width: 100%;
   height: 50px;
   font-size: 1.2rem;
+  font-weight: 500;
 }
 
-.form-group select {
+.users{
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
+}
+.modal-body{
+  text-align: left;
+}
+.modal .table{
+  border-color: white;
+  margin-bottom: 0;
+}
+
+.form-config{
+  max-width: 500px;
+  margin-top: 20px;
+}
+.form-config button, .form-config-role button{
+  width: 100%;
+  height: 50px;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.form-config-role{
+  max-width: 800px;
+}
+
+.card-footer.link a{
+  color: black;
+}
+
+.teste{
+  border-radius: 5px;
+  font-size: 1rem;
+  padding: .4rem 1rem;
+  color: black;
+  box-shadow: 0 0 6px 0 rgba(108, 96, 212, 0.5);
+  border: solid 3px transparent;
+  background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), linear-gradient(101deg, #82dcff, #595bfd);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  box-shadow: 2px 1000px 1px #fff inset;
+  transition: 0.3s;
+}
+.teste:hover{
+  box-shadow: none;
+  color: white;
 }

@@ -1,54 +1,50 @@
 ﻿@model Mercado.Models.Product
-
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Novo Produto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<div class="container form-config">
 
-<h4>Produto</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
-                <input id="floatingInput" asp-for="Name" class="form-control" placeholder="Name" />
-                <label for="floatingInput" asp-for="Name"></label>
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input id="floatingInput" asp-for="Quantity" class="form-control" placeholder="Quantity" />
-                <label for="floatingInput" asp-for="Quantity"></label>
-                <span asp-validation-for="Quantity" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <input id="floatingInput" asp-for="Price" class="form-control" placeholder="Price" />
-                <label for="floatingInput" asp-for="Price" ></label>
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-floating">
-                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" asp-for="ProviderId">
-                    
-                    @foreach (var item in ViewData["Provider"] as List<Mercado.Models.Provider>)
-                   {
-                        <option value="@item.Id">@item.Company</option>
-                   }
-                </select>
-                <label for="floatingSelect" asp-for="Fornecedor" class="control-label"></label>
-                <span asp-validation-for="ProviderId" class="text-danger"></span>
+    <h4>@ViewData["Title"]</h4>
+    <hr />
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-floating">
+            <input id="floatingInput" asp-for="Name" class="form-control" placeholder="Name" />
+            <label for="floatingInput" asp-for="Name"></label>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-floating">
+            <input id="floatingInput" asp-for="Quantity" class="form-control" placeholder="Quantity" />
+            <label for="floatingInput" asp-for="Quantity"></label>
+            <span asp-validation-for="Quantity" class="text-danger"></span>
+        </div>
+        <div class="form-floating">
+            <input id="floatingInput" asp-for="Price" class="form-control" placeholder="Price" />
+            <label for="floatingInput" asp-for="Price" ></label>
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="form-floating">
+            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" asp-for="ProviderId">
+                
+                @foreach (var item in ViewData["Provider"] as List<Mercado.Models.Provider>)
+            {
+                    <option value="@item.Id">@item.Company</option>
+            }
+            </select>
+            <label for="floatingSelect" asp-for="Fornecedor" class="control-label"></label>
+            <span asp-validation-for="ProviderId" class="text-danger"></span>
 
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+        <div class="form-group">
+            <button type="submit" value="Create" class="btn btn-primary">Criar</button>
+        </div>
+    </form>
+
+    <div>
+        <a asp-action="Index">Voltar para lista</a>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

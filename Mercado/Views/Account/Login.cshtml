@@ -2,49 +2,43 @@
 @{
     ViewData["Title"] = "Login";
 }
-<h1>@ViewData["Title"]</h1>
 
-<div class="row">
-    <div class="col-md-4">
-        <section>
-            <form id="account" method="post">
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-floating mb-3">
-                    <input id="floatingInput" asp-for="Email" class="form-control" placeholder="Name" />
-                    <label for="floatingInput" asp-for="Email"></label>
-                    <span asp-validation-for="Email" class="text-danger"></span>
+<div class="container account">
+    <h1>@ViewData["Title"]</h1>
+
+    <section>
+        <form id="account" method="post">
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-floating mb-3">
+                <input id="floatingInput" asp-for="Email" class="form-control" placeholder="Name" />
+                <label for="floatingInput" asp-for="Email"></label>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input id="floatingInput" asp-for="Password" class="form-control" placeholder="Password"/>
+                <label for="floatingInput" asp-for="Password"></label>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label asp-for="RememberMe">
+                        <input asp-for="RememberMe" />
+                        @Html.DisplayNameFor(m => m.RememberMe)
+                    </label>
                 </div>
-                <div class="form-floating mb-3">
-                    <input id="floatingInput" asp-for="Password" class="form-control" placeholder="Password"/>
-                    <label for="floatingInput" asp-for="Password"></label>
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="RememberMe">
-                            <input asp-for="RememberMe" />
-                            @Html.DisplayNameFor(m => m.RememberMe)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </div>
-                <div class="form-group">
-                    @*<p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>*@
-                    <p>
-                        <a asp-controller="Account" asp-action="Register" >Criar Conta</a>
-                    </p>
-                    @*<p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>*@
-                </div>
-            </form>
-        </section>
-    </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+            <div class="form-group">
+                <p>
+                    <a asp-controller="Account" asp-action="Register" >Criar Conta</a>
+                </p>
+            </div>
+        </form>
+    </section>
 </div>
 
 @section Scripts {
