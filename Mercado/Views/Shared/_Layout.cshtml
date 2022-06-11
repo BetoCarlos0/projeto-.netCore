@@ -19,58 +19,64 @@
 
 <body>
     <header class="p-3 bg-dark text-white">
-        <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-between">
+        <div class="d-flex flex-wrap align-items-center justify-content-between">
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 align-items-center">
+                <li>
+                    <a class="navbar-brand logo" asp-area="" asp-controller="Home" asp-action="Index">
+                        <p>Mercado</p>
+                        <img src="~/images/logo.png" />
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link px-2 text-white" asp-area="" asp-controller="Provider"
+                        asp-action="Index">Fornecedor</a>
+                </li>
+                <li>
+                    <a class="nav-link px-2 text-white" asp-area="" asp-controller="Product"
+                        asp-action="Index">Produtos</a>
+                </li>
+            </ul>
+            <div class="text-end">
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 align-items-center">
-                    <li>
-                        <a class="navbar-brand logo" asp-area="" asp-controller="Home" asp-action="Index">
-                            <p>Mercado</p>
-                            <img src="~/images/logo.png" />
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-white">Olá @((await UserManager.GetUserAsync(User)).Name)!</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Administration"
+                        asp-action="ListRole">Funções</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <form id="logoutForm" asp-controller="account" asp-action="logout" class="form-inline">
+                                <button id="logout" type="submit"
+                                class="logout-btn nav-link btn btn-link text-white">
+                                Sair
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="white" height="24" width="24"><path d="M8.9 10.85H16.95L14.425 8.35L16 6.725L21.275 12L16 17.275L14.425 15.65L16.95 13.15H8.9ZM12.05 2.8V5.075H5Q5 5.075 5 5.075Q5 5.075 5 5.075V18.925Q5 18.925 5 18.925Q5 18.925 5 18.925H12.05V21.2H5Q4.05 21.2 3.388 20.538Q2.725 19.875 2.725 18.925V5.075Q2.725 4.125 3.388 3.462Q4.05 2.8 5 2.8Z"/></svg>
+                                </button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Account"
+                            asp-action="Login">
+                            Login
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="white" height="24" width="24"><path d="M9.825 17.275 8.25 15.65 10.75 13.15H2.725V10.85H10.75L8.25 8.35L9.825 6.725L15.1 12ZM11.95 21.2V18.925H19Q19 18.925 19 18.925Q19 18.925 19 18.925V5.075Q19 5.075 19 5.075Q19 5.075 19 5.075H11.95V2.8H19Q19.95 2.8 20.613 3.462Q21.275 4.125 21.275 5.075V18.925Q21.275 19.875 20.613 20.538Q19.95 21.2 19 21.2Z"/></svg>
                         </a>
-                    </li>
-                    <li>
-                        <a class="nav-link px-2 text-white" asp-area="" asp-controller="Provider"
-                            asp-action="Index">Fornecedor</a>
-                    </li>
-                    <li>
-                        <a class="nav-link px-2 text-white" asp-area="" asp-controller="Product"
-                            asp-action="Index">Produtos</a>
-                    </li>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Account"
+                            asp-action="Register">
+                            Cadastrar
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="white" height="24" width="24"><path d="M12.6 11.65Q13.225 10.95 13.538 10.05Q13.85 9.15 13.85 8.2Q13.85 7.225 13.538 6.325Q13.225 5.425 12.6 4.75Q13.925 4.9 14.788 5.887Q15.65 6.875 15.65 8.2Q15.65 9.525 14.788 10.512Q13.925 11.5 12.6 11.65ZM17.85 19.3V16.95Q17.85 16.15 17.513 15.412Q17.175 14.675 16.575 14.15Q17.725 14.525 18.688 15.175Q19.65 15.825 19.65 16.95V19.3ZM19.65 12.75V10.75H17.65V9.25H19.65V7.25H21.15V9.25H23.15V10.75H21.15V12.75ZM8.35 11.7Q6.9 11.7 5.875 10.662Q4.85 9.625 4.85 8.2Q4.85 6.75 5.875 5.725Q6.9 4.7 8.35 4.7Q9.8 4.7 10.825 5.725Q11.85 6.75 11.85 8.2Q11.85 9.625 10.825 10.662Q9.8 11.7 8.35 11.7ZM0.85 19.3V17.075Q0.85 16.35 1.25 15.725Q1.65 15.1 2.3 14.75Q3.8 14.025 5.3 13.662Q6.8 13.3 8.35 13.3Q9.875 13.3 11.387 13.662Q12.9 14.025 14.375 14.75Q15.05 15.1 15.45 15.725Q15.85 16.35 15.85 17.075V19.3ZM8.35 10.2Q9.175 10.2 9.763 9.612Q10.35 9.025 10.35 8.2Q10.35 7.375 9.763 6.787Q9.175 6.2 8.35 6.2Q7.525 6.2 6.938 6.787Q6.35 7.375 6.35 8.2Q6.35 9.025 6.938 9.612Q7.525 10.2 8.35 10.2ZM2.35 17.8H14.35V17.075Q14.35 16.775 14.175 16.525Q14 16.275 13.7 16.1Q12.4 15.475 11.062 15.137Q9.725 14.8 8.35 14.8Q6.975 14.8 5.638 15.137Q4.3 15.475 3 16.1Q2.7 16.275 2.525 16.525Q2.35 16.775 2.35 17.075ZM8.35 8.2Q8.35 8.2 8.35 8.2Q8.35 8.2 8.35 8.2Q8.35 8.2 8.35 8.2Q8.35 8.2 8.35 8.2Q8.35 8.2 8.35 8.2Q8.35 8.2 8.35 8.2Q8.35 8.2 8.35 8.2Q8.35 8.2 8.35 8.2ZM8.35 17.8Q8.35 17.8 8.35 17.8Q8.35 17.8 8.35 17.8Q8.35 17.8 8.35 17.8Q8.35 17.8 8.35 17.8Q8.35 17.8 8.35 17.8Q8.35 17.8 8.35 17.8Q8.35 17.8 8.35 17.8Q8.35 17.8 8.35 17.8Z"/></svg>
+                        </a>
+                        </li>
+                    }
                 </ul>
-                <div class="text-end">
-                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 align-items-center">
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-white">Olá @((await UserManager.GetUserAsync(User)).Name)!</a>
-                            </li>
-                            if (User.IsInRole("Administrador"))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-white" asp-area="" asp-controller="Administration"
-                                asp-action="ListRole">Funções</a>
-                                </li>
-                            }
-                            <li class="nav-item">
-                                <form id="logoutForm" asp-controller="account" asp-action="logout" class="form-inline">
-                                    <button id="logout" type="submit"
-                                    class="nav-link btn btn-link text-white">Sair</button>
-                                </form>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Account"
-                                asp-action="Login">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Account"
-                                asp-action="Register">Cadastrar</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
             </div>
         </div>
     </header>
@@ -79,11 +85,12 @@
         @RenderBody()
     </main>
 
-    <footer class="border-top footer text-muted">
+    <footer>
         <div class="container">
-            &copy; 2022 - Mercado - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - Mercado
         </div>
     </footer>
+    <script src="https://kit.fontawesome.com/4024ba868b.js" crossorigin="anonymous"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
     <!-- JavaScript Bundle with Popper -->

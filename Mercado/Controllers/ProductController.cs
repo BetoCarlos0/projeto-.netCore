@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Mercado.Data;
 using Mercado.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Mercado.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly MercadoDbContext _context;

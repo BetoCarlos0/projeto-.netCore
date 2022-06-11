@@ -2,19 +2,24 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-size: 1.1rem;
 }
 
 a{
   text-decoration: none;
-  color: gray;
+  color: #212529;
 }
 
 /* header
 -------------------------------------------------- */
+header{
+  box-shadow: 4px 0px 20px #212529;
+}
 
 header .logo img{
   width: 50px;
   margin-right: 20px;
+  vertical-align: bottom;
 }
 
 header .logo p{
@@ -26,20 +31,28 @@ header ul li{
   font-size: 1.2rem;
 }
 
+/* body
+-------------------------------------------------- */
+
 body{
   display: flex;
   flex-direction: column;
   height: 100vh;
   background-color: #b9a0ff;
   background-image: linear-gradient(19deg, #c4a8ff 0%, #d4efff 100%);
-
 }
 
 body > main{
   flex: 1;
 }
+.container{
+  margin-top: 20px;
+}
 .table {
   box-shadow: 5px 10px 30px #a49cf6;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .table tbody{
@@ -51,12 +64,67 @@ body > main{
   background-color: rgb(238, 245, 255);
 }
 
-.table tbody a:hover{
-  fill: red;
+.icon-delete, .icon-edit, .icon-details{
+  fill: rgb(180, 180, 180);
+}
+.icon-delete:hover{
+  fill: rgb(255, 131, 131);
+}
+.icon-edit:hover{
+  fill: rgb(155, 155, 255);
+}
+.icon-details:hover{
+  fill: rgb(155, 155, 255);
 }
 
 .table .crud-button{
   text-align: end;
+}
+
+.custom-btn {
+  height: 50px;
+  padding: 4px 20px;
+  border: 2px solid #212529;
+  font-weight: 500;
+  background: transparent;
+  position: relative;
+  display: inline-block;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  color: #212529;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 7px;
+}
+.custom-btn:after {
+  position: absolute;
+  content: " ";
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease;
+  -webkit-transform: scale(.1);
+  transform: scale(.1);
+}
+.custom-btn:hover {
+  color: #fff;
+  fill: white;
+}
+.custom-btn:hover:after {
+  background: #212529;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+.back-list{
+  color: #8d8d8d;
+  fill: #8d8d8d;
+}
+
+.back-list:hover{
+  color: #2e42b4;
+  fill: #2e42b4;
 }
 
 /* roles
@@ -130,23 +198,19 @@ body .account button{
 }
 
 .card-footer.link a{
-  color: black;
+  color: #212529;
+}
+.checkbox{
+  margin: 10px 0;
+}
+.checkbox input{
+  vertical-align: middle;
+  width: 25px;
+  height: 25px;
 }
 
-.teste{
-  border-radius: 5px;
-  font-size: 1rem;
-  padding: .4rem 1rem;
-  color: black;
-  box-shadow: 0 0 6px 0 rgba(108, 96, 212, 0.5);
-  border: solid 3px transparent;
-  background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0)), linear-gradient(101deg, #82dcff, #595bfd);
-  background-origin: border-box;
-  background-clip: content-box, border-box;
-  box-shadow: 2px 1000px 1px #fff inset;
-  transition: 0.3s;
-}
-.teste:hover{
-  box-shadow: none;
-  color: white;
+footer{
+  text-align: center;
+  padding: 15px 0;
+  border-top: 1px solid rgb(35, 14, 223);
 }
