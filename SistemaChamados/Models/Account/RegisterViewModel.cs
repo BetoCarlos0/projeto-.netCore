@@ -8,15 +8,13 @@ namespace SistemaChamados.Models.Account
 {
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "CPF obrigatório"), Display(Name = "CPF")]
-        [StringLength(14, MinimumLength = 13, ErrorMessage = "Cpf deve ser maior que 2 letras")]
-        [Column(TypeName = "varchar(20)")]
-        public string UserName { get; set; } = string.Empty;
+        [Required(ErrorMessage = "CPF vazio"), Display(Name = "CPF")]
+        [StringLength(14, MinimumLength = 13, ErrorMessage = "CPF Inválido")]
+        public string Cpf { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Nome obrigatório")]
+        [Required(ErrorMessage = "Nome vazio")]
         [RegularExpression(@"^[a-zA-Z, ]*$", ErrorMessage = "Apenas letras")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "Nome deve ser maior que 2 letras")]
-        [Column(TypeName = "varchar(100)")]
         public string Name { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Email Vazio"), EmailAddress]
@@ -27,20 +25,22 @@ namespace SistemaChamados.Models.Account
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
 
-        [Required(ErrorMessage = "Cargo obrigatório"), Display(Name = "Cargo")]
+        [Required(ErrorMessage = "Telefone vazio"), Display(Name = "Telefone")]
+        [Column(TypeName = "varchar(20)")]
+        public string Phone { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Cargo vazio"), Display(Name = "Cargo")]
         public string Role { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Departamento obrigatório"), Display(Name = "Departamento")]
+        [Required(ErrorMessage = "Departamento vazio"), Display(Name = "Departamento")]
         [StringLength(40, MinimumLength = 3, ErrorMessage = "Departamento deve ser maior que 3 letras")]
-        [Column(TypeName = "varchar(40)")]
         public string Department { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Supervisor obrigatório")]
+        [Required(ErrorMessage = "Supervisor vazio")]
         [StringLength(40, MinimumLength = 3, ErrorMessage = "Supervisor deve ser maior que 3 letras")]
-        [Column(TypeName = "varchar(40)")]
         public string Supervisor { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Ramal obrigatório")]
+        [Required(ErrorMessage = "Ramal vazio")]
         [Range(1,100, ErrorMessage = "Ramal deve ser maior que 0 e menor que 100")]
         public int Ramal { get; set; }
 

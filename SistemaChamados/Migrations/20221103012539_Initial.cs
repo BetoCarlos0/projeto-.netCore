@@ -1,9 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Mercado.Migrations
+#nullable disable
+
+namespace SistemaChamados.Migrations
 {
-    public partial class Identity : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,6 +28,13 @@ namespace Mercado.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    CpfNumber = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Phone = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Department = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: false),
+                    Supervisor = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: false),
+                    Ramal = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -152,6 +161,31 @@ namespace Mercado.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Calls",
+                columns: table => new
+                {
+                    CallsId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ramal = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Decription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AnexoUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AspNetUsersId = table.Column<int>(type: "int", nullable: false),
+                    UserCustomId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Calls", x => x.CallsId);
+                    table.ForeignKey(
+                        name: "FK_Calls_AspNetUsers_UserCustomId",
+                        column: x => x.UserCustomId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -190,6 +224,11 @@ namespace Mercado.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Calls_UserCustomId",
+                table: "Calls",
+                column: "UserCustomId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -208,6 +247,9 @@ namespace Mercado.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Calls");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

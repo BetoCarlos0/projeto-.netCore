@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using SistemaChamados.Data;
 using SistemaChamados.Data.Identity;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,21 +22,39 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredUniqueChars = 1;
 });
 
-builder.Services.AddDbContext<SistemaDbContext>(
-    options =>
-    {
-        var connectionString = builder.Configuration.GetConnectionString("MySql");
-        options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-    });
-
 //builder.Services.AddDbContext<SistemaDbContext>(
-//        options => options.UseSqlServer(builder.Configuration.GetConnectionString("MySql")));
+//    options =>
+//    {
+//        var connectionString = builder.Configuration.GetConnectionString("MySql");
+//        options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+//    });
 
-builder.Services.AddIdentity<UserCustom, IdentityRole>().AddEntityFrameworkStores<SistemaDbContext>().AddDefaultTokenProviders();
 
-//builder.Services.ConfigureApplicationCookie(op => op.LoginPath = "/UserAuthentication/Login");
+builder.Services.AddDbContext<SistemaDbContext>(
+        options => options.UseSqlServer(builder.Configuration.GetConnectionString("Sqlserver")));
+
+builder.Services.AddIdentity<UserCustom, IdentityRole>().AddEntityFrameworkStores<SistemaDbContext>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateAsyncScope())
+{
+    var services = scope.ServiceProvider;
+    var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+    try
+    {
+        var context = services.GetRequiredService<SistemaDbContext>();
+        var userManager = services.GetRequiredService<UserManager<UserCustom>>();
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+        await SeedData.SeedRolesAsync(userManager, roleManager);
+        await SeedData.SeedSuperAdminAsync(userManager, roleManager);
+    }
+    catch (Exception ex)
+    {
+        var logger = loggerFactory.CreateLogger<Program>();
+        logger.LogError(ex, "An error occurred seeding the DB.");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -53,6 +74,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();
