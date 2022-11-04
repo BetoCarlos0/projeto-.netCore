@@ -21,7 +21,7 @@ namespace SistemaChamados.Controllers
             _signInManager = signInManager;
             _context = context;
         }
-        [HttpGet]
+        [HttpGet(Name = "Login")]
         public IActionResult Login()
         {
             return View();
@@ -39,7 +39,7 @@ namespace SistemaChamados.Controllers
                 if (Url.IsLocalUrl(returnUrl))
                     return Redirect(returnUrl);
                 else
-                    return RedirectToAction("index", "home");
+                    return RedirectToAction("Home", "Dashboard");
             }
 
             return View(model);
@@ -73,7 +73,7 @@ namespace SistemaChamados.Controllers
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToAction("index", "home");
+                return RedirectToAction("Home", "Dashboard");
             }
 
             return View(model);
@@ -82,7 +82,7 @@ namespace SistemaChamados.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("index", "home");
+            return RedirectToAction("Login", "Account");
         }
 
         [AcceptVerbs("Get", "Post")]
