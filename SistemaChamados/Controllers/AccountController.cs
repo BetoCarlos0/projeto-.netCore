@@ -22,8 +22,10 @@ namespace SistemaChamados.Controllers
             _context = context;
         }
         [HttpGet(Name = "Login")]
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (user != null) return RedirectToAction("Home", "DashBoard");
             return View();
         }
 
@@ -44,40 +46,7 @@ namespace SistemaChamados.Controllers
 
             return View(model);
         }
-
-        public IActionResult Register()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
-        {
-            if (!ModelState.IsValid) return View(model);
-
-            var user = new UserCustom()
-            {
-                Name = model.Name,
-                UserName = model.Cpf,
-                CpfNumber = model.Cpf,
-                BirthDate = model.BirthDate,
-                Department = model.Department,
-                Supervisor = model.Supervisor,
-                PhoneNumber = model.Phone,
-                Ramal = model.Ramal,
-                Email = model.Email,
-            };
-
-            var result = await _userManager.CreateAsync(user, model.Password);
-
-            if (result.Succeeded)
-            {
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return RedirectToAction("Home", "Dashboard");
-            }
-
-            return View(model);
-        }
+        
 
         public async Task<IActionResult> Logout()
         {

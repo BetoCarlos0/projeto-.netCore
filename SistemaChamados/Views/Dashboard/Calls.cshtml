@@ -1,0 +1,71 @@
+﻿@model SistemaChamados.Models.Account.CallsViewModel
+@{
+    ViewData["Title"] = "Chamados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main id="main" class="main">
+
+    <div class="pagetitle col-lg-10" style="display: flex; flex-direction: column; margin: 0 auto;">
+        <h1>Novo Chamado</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-action="Home">Home</a></li>
+                <li class="breadcrumb-item active">Novo Chamado</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+        <div class="row" style="justify-content: center;">
+            <div class="col-lg-10">
+                <div class="card">
+                    <div class="card-body">
+                        <br />
+                        <!-- Multi Columns Form -->
+                        <form asp-action="Calls" method="post" class="row">
+
+                            <div class="form-floating mb-3 col-6">
+                                <input id="floatingName" asp-for="Name" class="form-control" placeholder="Name" />
+                                <label for="floatingName" asp-for="Name"></label>
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating mb-3 col-6">
+                                <input id="floatingCpf" asp-for="Phone" class="form-control" placeholder="Cpf" />
+                                <label for="floatingCpf" asp-for="Phone"></label>
+                                <span asp-validation-for="Phone" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating mb-3 col-6">
+                                <input id="floatingEmail" asp-for="Ramal" class="form-control" placeholder="Email" />
+                                <label for="floatingEmail" asp-for="Ramal"></label>
+                                <span asp-validation-for="Ramal" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating mb-3 col-6">
+                                <input id="floatingBith" asp-for="Title" class="form-control" placeholder="BirthDate" />
+                                <label for="floatingBith" asp-for="Title"></label>
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating mb-3 col-6">
+                                <input id="floatingPhone" asp-for="Phone" class="form-control" placeholder="Phone" />
+                                <label for="floatingPhone" asp-for="Phone"></label>
+                                <span asp-validation-for="Phone" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating mb-3 col-6">
+                                <input id="floatingDepar" asp-for="Decription" class="form-control" placeholder="Department" />
+                                <label for="floatingDepar" asp-for="Decription"></label>
+                                <span asp-validation-for="Decription" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100" type="submit">Criar Chamado</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->
+@section Scripts {
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

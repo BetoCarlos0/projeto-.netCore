@@ -8,13 +8,13 @@ namespace SistemaChamados.Data.Identity
 {
     public class UserCustom : IdentityUser
     {
-        [Required(ErrorMessage = "Nome vazio")]
+        [Required(ErrorMessage = "Nome vazio"), Display(Name = "Nome")]
         [RegularExpression(@"^[a-zA-Z]*$", ErrorMessage = "Apenas letras")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "Nome deve ser maior que 2 letras")]
         [Column(TypeName = "varchar(100)")]
         public string Name { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "CPF vazio")]
+        [Required(ErrorMessage = "CPF vazio"), Display(Name = "CPF")]
         [StringLength(30, MinimumLength = 3, ErrorMessage = "CPF deve ser maior que 2 letras")]
         [Column(TypeName = "varchar(30)")]
         public string CpfNumber { get; set; } = string.Empty;

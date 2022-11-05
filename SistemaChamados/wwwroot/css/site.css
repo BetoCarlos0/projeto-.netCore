@@ -14,11 +14,11 @@ body {
     top: 50vh;
 }
 
-    .context h1 {
-        text-align: center;
-        color: #fff;
-        font-size: 50px;
-    }
+.context h1 {
+    text-align: center;
+    color: #fff;
+    font-size: 50px;
+}
 
 
 .area {
@@ -124,8 +124,6 @@ body {
     animation-duration: 11s;
 }
 
-
-
 @keyframes animate {
 
     0% {
@@ -140,8 +138,6 @@ body {
         border-radius: 50%;
     }
 }
-
-
 
 
 /**
@@ -169,10 +165,10 @@ a {
     text-decoration: none;
 }
 
-    a:hover {
-        color: #717ff5;
-        text-decoration: none;
-    }
+a:hover {
+    color: #717ff5;
+    text-decoration: none;
+}
 
 h1,
 h2,
@@ -205,12 +201,12 @@ h6 {
     margin-bottom: 10px;
 }
 
-    .pagetitle h1 {
-        font-size: 24px;
-        margin-bottom: 0;
-        font-weight: 600;
-        color: #012970;
-    }
+.pagetitle h1 {
+    font-size: 24px;
+    margin-bottom: 0;
+    font-weight: 600;
+    color: #012970;
+}
 
 /*--------------------------------------------------------------
 # Back to top button
@@ -249,6 +245,10 @@ h6 {
 # Override some default Bootstrap stylings
 --------------------------------------------------------------*/
 /* Dropdown menus */
+.form-floating>label {
+    left: 10px;
+}
+
 .dropdown-menu {
     border-radius: 4px;
     padding: 10px 0;
@@ -823,101 +823,101 @@ h6 {
     list-style: none;
 }
 
-    .sidebar-nav li {
-        padding: 0;
-        margin: 0;
-        list-style: none;
-    }
+.sidebar-nav li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
 
-    .sidebar-nav .nav-item {
-        margin-bottom: 5px;
-    }
+.sidebar-nav .nav-item {
+    margin-bottom: 5px;
+}
 
-    .sidebar-nav .nav-heading {
-        font-size: 11px;
-        text-transform: uppercase;
-        color: #899bbd;
-        font-weight: 600;
-        margin: 10px 0 5px 15px;
-    }
+.sidebar-nav .nav-heading {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #899bbd;
+    font-weight: 600;
+    margin: 10px 0 5px 15px;
+}
 
-    .sidebar-nav .nav-link {
-        display: flex;
-        align-items: center;
-        font-size: 15px;
-        font-weight: 600;
-        color: #4154f1;
-        transition: 0.3;
-        background: #f6f9ff;
-        padding: 10px 15px;
-        border-radius: 4px;
-    }
+.sidebar-nav .nav-link {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: #4154f1;
+    transition: 0.3;
+    background: #f6f9ff;
+    padding: 10px 15px;
+    border-radius: 4px;
+}
 
-        .sidebar-nav .nav-link i {
-            font-size: 16px;
-            margin-right: 10px;
-            color: #4154f1;
-        }
+.sidebar-nav .nav-link svg {
+    font-size: 16px;
+    margin-right: 10px;
+    color: #4154f1;
+}
 
-        .sidebar-nav .nav-link.collapsed {
-            color: #012970;
-            background: #fff;
-        }
+.sidebar-nav .nav-link.collapsed {
+    color: #012970;
+    background: #fff;
+}
 
-            .sidebar-nav .nav-link.collapsed i {
-                color: #899bbd;
-            }
+.sidebar-nav .nav-link.collapsed i {
+    color: #899bbd;
+}
 
-        .sidebar-nav .nav-link:hover {
-            color: #4154f1;
-            background: #f6f9ff;
-        }
+.sidebar-nav .nav-link:hover {
+    color: #4154f1;
+    background: #f6f9ff;
+}
 
-            .sidebar-nav .nav-link:hover i {
-                color: #4154f1;
-            }
+.sidebar-nav .nav-link:hover i {
+    color: #4154f1;
+}
 
-        .sidebar-nav .nav-link .bi-chevron-down {
-            margin-right: 0;
-            transition: transform 0.2s ease-in-out;
-        }
+.sidebar-nav .nav-link .bi-chevron-down {
+    margin-right: 0;
+    transition: transform 0.2s ease-in-out;
+}
 
-        .sidebar-nav .nav-link:not(.collapsed) .bi-chevron-down {
-            transform: rotate(180deg);
-        }
+.sidebar-nav .nav-link:not(.collapsed) .bi-chevron-down {
+    transform: rotate(180deg);
+}
 
-    .sidebar-nav .nav-content {
-        padding: 5px 0 0 0;
-        margin: 0;
-        list-style: none;
-    }
+.sidebar-nav .nav-content {
+    padding: 5px 0 0 0;
+    margin: 0;
+    list-style: none;
+}
 
-        .sidebar-nav .nav-content a {
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-            font-weight: 600;
-            color: #012970;
-            transition: 0.3;
-            padding: 10px 0 10px 40px;
-            transition: 0.3s;
-        }
+.sidebar-nav .nav-content a {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #012970;
+    transition: 0.3;
+    padding: 10px 0 10px 40px;
+    transition: 0.3s;
+}
 
-            .sidebar-nav .nav-content a i {
-                font-size: 6px;
-                margin-right: 8px;
-                line-height: 0;
-                border-radius: 50%;
-            }
+.sidebar-nav .nav-content a i {
+    font-size: 6px;
+    margin-right: 8px;
+    line-height: 0;
+    border-radius: 50%;
+}
 
-            .sidebar-nav .nav-content a:hover,
-            .sidebar-nav .nav-content a.active {
-                color: #4154f1;
-            }
+.sidebar-nav .nav-content a:hover,
+.sidebar-nav .nav-content a.active {
+    color: #4154f1;
+}
 
-                .sidebar-nav .nav-content a.active i {
-                    background-color: #4154f1;
-                }
+.sidebar-nav .nav-content a.active i {
+    background-color: #4154f1;
+}
 
 /*--------------------------------------------------------------
 # Dashboard
@@ -929,36 +929,36 @@ h6 {
     top: 15px;
 }
 
-    .dashboard .filter .icon {
-        color: #aab7cf;
-        padding-right: 20px;
-        padding-bottom: 5px;
-        transition: 0.3s;
-        font-size: 16px;
-    }
+.dashboard .filter .icon {
+    color: #aab7cf;
+    padding-right: 20px;
+    padding-bottom: 5px;
+    transition: 0.3s;
+    font-size: 16px;
+}
 
-        .dashboard .filter .icon:hover,
-        .dashboard .filter .icon:focus {
-            color: #4154f1;
-        }
+.dashboard .filter .icon:hover,
+.dashboard .filter .icon:focus {
+    color: #4154f1;
+}
 
-    .dashboard .filter .dropdown-header {
-        padding: 8px 15px;
-    }
+.dashboard .filter .dropdown-header {
+    padding: 8px 15px;
+}
 
-        .dashboard .filter .dropdown-header h6 {
-            text-transform: uppercase;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            color: #aab7cf;
-            margin-bottom: 0;
-            padding: 0;
-        }
+.dashboard .filter .dropdown-header h6 {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #aab7cf;
+    margin-bottom: 0;
+    padding: 0;
+}
 
-    .dashboard .filter .dropdown-item {
-        padding: 8px 15px;
-    }
+.dashboard .filter .dropdown-item {
+    padding: 8px 15px;
+}
 
 /* Info Cards */
 .dashboard .info-card {
