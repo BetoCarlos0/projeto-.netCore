@@ -20,8 +20,8 @@
                       <div class="card">
                             <div class="card-body"><br/>
                               <!-- Multi Columns Form -->
-                                    <form asp-action="Register" method="post" class="row">
-
+                                    <form asp-action="EditUser" method="post" class="row">
+                                    <input type="hidden" asp-for="Id" />
                                     <div class="form-floating mb-3 col-6">
                                         <input id="floatingName" asp-for="Name" class="form-control" placeholder="Name" />
                                         <label for="floatingName" asp-for="Name"></label>
@@ -59,11 +59,16 @@
                                     </div>
                                     <div class="form-floating mb-3 col-4">
                                         <select class="form-select" asp-for="Role" id="floatingSelect" aria-label="Floating label select example">
-                                            <option selected>Selecione o cargo</option>
+
                                             @foreach (var item in ViewBag.Roles)
                                             {
-                                                <option value="@item.Name">@item.Name</option>
+                                                if (item.Name == ViewBag.RoleUserEdit){
+                                                    <option selected value="@item.Name">@item.Name</option>
+                                                }else{
+                                                    <option value="@item.Name">@item.Name</option>
+                                                }
                                             }
+
                                         </select>
                                         <label for="floatingSelect" asp-for="Role">Cargo</label>
                                         <span asp-validation-for="Role" class="text-danger"></span>
@@ -73,7 +78,7 @@
                                         <label for="floatingRamal" asp-for="Ramal"></label>
                                         <span asp-validation-for="Ramal" class="text-danger"></span>
                                     </div>
-                                    <div class="form-floating mb-3 col-6">
+                                    @*<div class="form-floating mb-3 col-6">
                                         <input id="floatingPassword" asp-for="Password" class="form-control" placeholder="Password" />
                                         <label for="floatingPassword" asp-for="Password"></label>
                                         <span asp-validation-for="Password" class="text-danger"></span>
@@ -82,9 +87,9 @@
                                         <input id="floatingConfirm" asp-for="ConfirmPassword" class="form-control" placeholder="ConfirmPassword" />
                                         <label for="floatingConfirm" asp-for="ConfirmPassword"></label>
                                         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                                    </div>
+                                    </div>*@
                                     <div class="col-12">
-                                        <button class="btn btn-primary w-100" type="submit">Criar Conta</button>
+                                        <button class="btn btn-primary w-100" type="submit">Editar Usuário</button>
                                     </div>
                                 </form>
                             </div>

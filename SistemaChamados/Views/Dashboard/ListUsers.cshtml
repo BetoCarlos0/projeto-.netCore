@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using SistemaChamados.Data.Identity
 @inject UserManager<UserCustom> UserManager
+@inject RoleManager<IdentityRole> RoleManager
 
 @model IEnumerable<SistemaChamados.Data.Identity.UserCustom>
 @{
@@ -11,11 +12,11 @@
 <main id="main" class="main">
 
     <div class="pagetitle col-lg-10" style="display: flex; flex-direction: column; margin: 0 auto;">
-        <h1>Usuários</h1>
+        <h1>@ViewData["Title"]</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-action="Home">Home</a></li>
-                <li class="breadcrumb-item active">Usuários</li>
+                <li class="breadcrumb-item active">@ViewData["Title"]</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -38,7 +39,13 @@
                                         @Html.DisplayNameFor(model => model.Email)
                                     </th>
                                     <th>
+                                        @Html.DisplayNameFor(model => model.PhoneNumber)
+                                    </th>
+                                    <th>
                                         @Html.DisplayNameFor(model => model.BirthDate)
+                                    </th>
+                                    <th>
+                                        Cargo
                                     </th>
                                     <th></th>
                                 </tr>
@@ -58,9 +65,16 @@
                                                 @Html.DisplayFor(modelItem => item.Email)
                                             </td>
                                             <td>
+                                                @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                            </td>
+                                            <td>
                                                 @Html.DisplayFor(modelItem => item.BirthDate)
                                             </td>
-                                            <td class="crud-button">
+                                            <td>
+                                                @((await UserManager.GetRolesAsync(item)).FirstOrDefault())
+                                            </td>
+                                            
+                                            <td class="crud-button" style="text-align: end;">
                                                 <a class="icon-edit" asp-action="EditUser" asp-route-id="@item.Id">
                                                     <svg xmlns="http://www.w3.org/2000/svg" height="35" width="35"><path d="M7.792 32.208H9.792L28.833 13.167L27.833 12.167L26.833 11.167L7.792 30.208ZM5 35V29.083L28.792 5.292Q29.583 4.5 30.771 4.521Q31.958 4.542 32.75 5.333L34.708 7.292Q35.5 8.125 35.5 9.271Q35.5 10.417 34.708 11.208L10.917 35ZM32.625 9.208 30.708 7.292ZM28.833 13.167 27.833 12.167 26.833 11.167 28.833 13.167Z" /></svg>
                                                 </a>

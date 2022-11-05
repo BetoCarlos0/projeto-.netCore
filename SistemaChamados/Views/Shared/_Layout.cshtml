@@ -2,6 +2,11 @@
 @using SistemaChamados.Data.Identity
 @inject UserManager<UserCustom> UserManager
 
+@{
+    var user = await UserManager.GetUserAsync(User);
+    ViewBag.Role = (await UserManager.GetRolesAsync(user)).FirstOrDefault();
+}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -45,13 +50,13 @@
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                         <img src="~/images/profile.png" alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">@((await UserManager.GetUserAsync(User)).Name)</span>
+                        <span class="d-none d-md-block dropdown-toggle ps-2">@user.Name</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>@((await UserManager.GetUserAsync(User)).Name)</h6>
-                            <span>@(ViewBag.Rolename)</span>
+                            <h6>@user.Name</h6>
+                            <span>@ViewBag.Role</span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -133,7 +138,7 @@
                     <span>Chamados</span>
                 </a>
             </li>
-            @if (ViewBag.Rolename == "Administrador")
+            @if (ViewBag.Role == "Administrador")
             {
                 <li class="nav-item">
                     <a class="nav-link collapsed" asp-action="ListUsers">

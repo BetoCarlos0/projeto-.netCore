@@ -8,6 +8,9 @@ namespace SistemaChamados.Models.Account
 {
     public class RegisterViewModel
     {
+        [NotMapped]
+        public string Id { get; set; } = string.Empty;
+
         [Required(ErrorMessage = "CPF vazio"), Display(Name = "CPF")]
         [StringLength(14, MinimumLength = 13, ErrorMessage = "CPF Inválido")]
         public string Cpf { get; set; } = string.Empty;
@@ -18,7 +21,7 @@ namespace SistemaChamados.Models.Account
         public string Name { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Email Vazio"), EmailAddress]
-        [Remote(action: "IsEmailUse", controller: "Account")]
+        //[Remote(action: "IsEmailUse", controller: "Account")]
         public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Data de nascimento obrigatório"), Display(Name = "Data de Nascimento")]
