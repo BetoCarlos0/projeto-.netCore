@@ -117,21 +117,69 @@ namespace SistemaChamados.Controllers
             user.Ramal = model.Ramal;
             user.Email = model.Email;
 
-            //var result = await _userManager.UpdateAsync(userCustom);
             if ((await _userManager.UpdateAsync(user)).Succeeded)
             {
                 if (model.Role != (await _userManager.GetRolesAsync(user)).FirstOrDefault())
-                    await _userManager.AddToRoleAsync(user, model.Role);
+                {
+                    var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
 
+                    await _userManager.RemoveFromRoleAsync(user, role);
+                    await _userManager.AddToRoleAsync(user, model.Role);
+                }
                 return RedirectToAction("ListUsers");
             }
-
             return View(model);
         }
 
-        public async Task<IActionResult> EditPassword()
+        [HttpGet]
+        public async Task<IActionResult> ChangePassword(string id)
         {
-            return View();
+            var change = new ChangePasswordViewModel()
+            {
+                UserId = id
+            };
+            return View(change);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+
+            var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+            if (result.Succeeded)
+                return RedirectToAction("ListUsers");
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            ViewBag.GetUserRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+
+            if (user == null) return NotFound();
+
+            return View(user);
+        }
+
+        [HttpPost, ActionName("DeleteUser")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteUserConfirmed(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if ((await _userManager.DeleteAsync(user)).Succeeded)
+                return RedirectToAction("ListUsers");
+
+            return View(id);
         }
 
         public async Task<IActionResult> Calls(CallsViewModel model)
