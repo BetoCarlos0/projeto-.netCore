@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SistemaChamados.Migrations
 {
-    public partial class updatedatabase : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -171,9 +171,10 @@ namespace SistemaChamados.Migrations
                     Ramal = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Decription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AnexoUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AnexoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AspNetUsersId = table.Column<int>(type: "int", nullable: false),
+                    Solution = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AspNetUsersId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserCustomId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>

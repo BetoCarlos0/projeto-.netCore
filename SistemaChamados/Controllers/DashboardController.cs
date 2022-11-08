@@ -47,6 +47,7 @@ namespace SistemaChamados.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public async Task<IActionResult> CreateUser(RegisterViewModel model)
         {
@@ -73,12 +74,12 @@ namespace SistemaChamados.Controllers
                 return RedirectToAction("ListUsers", "Dashboard");
             }
 
-            //await GetRole();
             ViewBag.Roles = _roleManager.Roles.ToList();
 
             return View(model);
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public async Task<IActionResult> EditUser(string? id)
         {
@@ -105,6 +106,7 @@ namespace SistemaChamados.Controllers
             return View(result);
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public async Task<IActionResult> EditUser(RegisterViewModel model)
         {
@@ -135,6 +137,7 @@ namespace SistemaChamados.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public IActionResult ChangePassword(string id)
         {
@@ -145,6 +148,7 @@ namespace SistemaChamados.Controllers
             return View(change);
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
@@ -188,13 +192,20 @@ namespace SistemaChamados.Controllers
 
         public async Task<IActionResult> ListCalls()
         {
-            var calls = await _context.Calls.ToListAsync();
-
-            return View(calls);
+            var user = await _userManager.GetUserAsync(User);
+            var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+            if (role == "Usuario")
+            {
+                return View(await _context.Calls.Where(x => x.AspNetUsersId == user.Id).ToListAsync());
+            }
+            else
+            {
+                return View(await _context.Calls.ToListAsync());
+            }
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateCall()
+        public IActionResult CreateCall()
         {            
             ViewBag.Status = Enum.GetNames(typeof(Status));
 
@@ -214,6 +225,31 @@ namespace SistemaChamados.Controllers
                 return RedirectToAction("ListCalls");
             }
 
+            return View(model);
+        }
+
+        [Authorize(Roles = "Administrador, Operador")]
+        [HttpGet]
+        public async Task<IActionResult> EditCall(int id)
+        {
+            ViewBag.Status = Enum.GetNames(typeof(Status));
+            var call = await _context.Calls.FindAsync(id);
+            return View(call);
+        }
+
+        [Authorize(Roles = "Administrador, Operador")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditCall([Bind("CallsId, AspNetUsersId, Name, Ramal, Phone, Status, Decription, Title, Solution")] Calls model)
+        {
+            ViewBag.Status = Enum.GetNames(typeof(Status));
+            if (ModelState.IsValid)
+            {
+                _context.Update(model);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("ListCalls");
+            }
             return View(model);
         }
     }

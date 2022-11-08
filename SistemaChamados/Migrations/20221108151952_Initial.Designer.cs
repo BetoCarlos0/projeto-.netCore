@@ -12,8 +12,8 @@ using SistemaChamados.Data;
 namespace SistemaChamados.Migrations
 {
     [DbContext(typeof(SistemaDbContext))]
-    [Migration("20221108004008_update-database")]
-    partial class updatedatabase
+    [Migration("20221108151952_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -257,11 +257,11 @@ namespace SistemaChamados.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CallsId"), 1L, 1);
 
                     b.Property<string>("AnexoUrl")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("AspNetUsersId")
-                        .HasColumnType("int");
+                    b.Property<string>("AspNetUsersId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Decription")
                         .IsRequired()
@@ -277,6 +277,9 @@ namespace SistemaChamados.Migrations
 
                     b.Property<int>("Ramal")
                         .HasColumnType("int");
+
+                    b.Property<string>("Solution")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .IsRequired()
