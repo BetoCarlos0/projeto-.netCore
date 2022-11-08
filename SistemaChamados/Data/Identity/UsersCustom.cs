@@ -36,6 +36,9 @@ namespace SistemaChamados.Data.Identity
         [Range(1, 100, ErrorMessage = "Ramal deve ser maior que 0 e menor que 100")]
         public int Ramal { get; set; }
 
+        [NotMapped]
+        public string? Role { get; set; } = string.Empty;
+
         [Display(Name = "Chamados")]
         public IEnumerable<Calls> Calls { get; set; } = Enumerable.Empty<Calls>();
     }

@@ -635,16 +635,21 @@ h6 {
 
 .header-nav .nav-profile {
     color: #012970;
+    border-radius: 8px;
 }
 
-    .header-nav .nav-profile img {
-        max-height: 36px;
-    }
+.header-nav .nav-profile:hover {
+    background-color: #e7efff;
+}
 
-    .header-nav .nav-profile span {
-        font-size: 14px;
-        font-weight: 600;
-    }
+.header-nav .nav-profile img {
+    max-height: 36px;
+}
+
+.header-nav .nav-profile span {
+    font-size: 14px;
+    font-weight: 600;
+}
 
 .header-nav .badge-number {
     position: absolute;
@@ -866,10 +871,11 @@ h6 {
     color: #899bbd;
 }
 
-.sidebar-nav .nav-link:hover {
-    color: #4154f1;
-    background: #f6f9ff;
-}
+    .sidebar-nav .nav-link:hover {
+        color: #4154f1;
+        background: #f6f9ff;
+    }
+
 
 .sidebar-nav .nav-link:hover i {
     color: #4154f1;

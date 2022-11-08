@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SistemaChamados.Data;
@@ -17,7 +18,6 @@ namespace SistemaChamados.Controllers
         private readonly UserManager<UserCustom> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SistemaDbContext _context;
-        private readonly SignInManager<UserCustom> _signInManager;
 
         public DashboardController(UserManager<UserCustom> userManager, RoleManager<IdentityRole> roleManager, SistemaDbContext dbContext)
         {
@@ -89,39 +89,38 @@ namespace SistemaChamados.Controllers
 
             var user = await _userManager.FindByIdAsync(id);
 
-            var result = new RegisterViewModel()
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Cpf = user.CpfNumber,
-                BirthDate = user.BirthDate,
-                Department = user.Department,
-                Supervisor = user.Supervisor,
-                Phone = user.PhoneNumber,
-                Ramal = user.Ramal,
-                Email = user.Email,
-            };
             ViewBag.RoleUserEdit = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
 
-            return View(result);
+            return View(user);
         }
 
         [Authorize(Roles = "Administrador")]
         [HttpPost]
-        public async Task<IActionResult> EditUser(RegisterViewModel model)
+        public async Task<IActionResult> EditUser([Bind("Id, Name, CpfNumber, Email, BirthDate, Role, Supervisor, Department, Ramal, PhoneNumber, LockoutEnabled")] UserCustom model)
         {
             ViewBag.Roles = _roleManager.Roles.ToList();
 
+
             var user = await _userManager.FindByIdAsync(model.Id);
 
+            if (model.LockoutEnabled == true)
+            {
+                user.LockoutEnd = new DateTime(3000,01,01);
+            }
+            else {
+                user.LockoutEnd = (DateTime?)null;
+            }
+
             user.Name = model.Name;
-            user.CpfNumber = model.Cpf;
+            user.UserName = model.CpfNumber;
+            user.CpfNumber = model.CpfNumber;
             user.BirthDate = model.BirthDate;
             user.Department = model.Department;
             user.Supervisor = model.Supervisor;
-            user.PhoneNumber = model.Phone;
+            user.PhoneNumber = model.PhoneNumber;
             user.Ramal = model.Ramal;
             user.Email = model.Email;
+            user.LockoutEnabled = model.LockoutEnabled;
 
             if ((await _userManager.UpdateAsync(user)).Succeeded)
             {

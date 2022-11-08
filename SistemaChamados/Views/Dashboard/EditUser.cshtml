@@ -1,11 +1,11 @@
-﻿@model SistemaChamados.Models.Account.RegisterViewModel
+﻿@model SistemaChamados.Data.Identity.UserCustom
 @{
     ViewData["Title"] = "Editar Usuário";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <main id="main" class="main">
 
-    <div class="pagetitle col-lg-10" style="display: flex; flex-direction: column; margin: 0 auto;">
+    <div class="pagetitle col-lg-9" style="display: flex; flex-direction: column; margin: 0 auto;">
         <h1>Editar Usuário</h1>
         <nav>
             <ol class="breadcrumb">
@@ -17,7 +17,7 @@
     </div><!-- End Page Title -->
     <section class="section">
         <div class="row" style="justify-content: center;">
-            <div class="col-lg-10">
+            <div class="col-lg-9">
                 <div class="card">
                     <div class="card-body">
                         <br />
@@ -30,9 +30,9 @@
                                 <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
                             <div class="form-floating mb-3 col-6">
-                                <input id="floatingCpf" asp-for="Cpf" class="form-control" placeholder="Cpf" />
-                                <label for="floatingCpf" asp-for="Cpf"></label>
-                                <span asp-validation-for="Cpf" class="text-danger"></span>
+                                <input id="floatingCpf" asp-for="CpfNumber" class="form-control" placeholder="CpfNumber" />
+                                <label for="floatingCpf" asp-for="CpfNumber"></label>
+                                <span asp-validation-for="CpfNumber" class="text-danger"></span>
                             </div>
                             <div class="form-floating mb-3 col-6">
                                 <input id="floatingEmail" asp-for="Email" class="form-control" placeholder="Email" />
@@ -45,9 +45,9 @@
                                 <span asp-validation-for="BirthDate" class="text-danger"></span>
                             </div>
                             <div class="form-floating mb-3 col-6">
-                                <input id="floatingPhone" asp-for="Phone" class="form-control" placeholder="Phone" />
-                                <label for="floatingPhone" asp-for="Phone"></label>
-                                <span asp-validation-for="Phone" class="text-danger"></span>
+                                <input id="floatingPhone" asp-for="PhoneNumber" class="form-control" placeholder="PhoneNumber" />
+                                <label for="floatingPhone" asp-for="PhoneNumber"></label>
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                             </div>
                             <div class="form-floating mb-3 col-6">
                                 <input id="floatingDepar" asp-for="Department" class="form-control" placeholder="Department" />
@@ -85,8 +85,28 @@
                                 <span asp-validation-for="Ramal" class="text-danger"></span>
                             </div>
 
-                            <div class="col-4 mb-3">
-                                <a asp-action="ChangePassword" asp-route-id="@Model.Id" class="btn btn-outline-primary" type="submit">Alterar senha</a>
+                            <div class="form-floating mb-3 col-12" style="display: flex; justify-content: space-between;align-items: center;">
+                                <div class="">
+                                    <a asp-action="ChangePassword" asp-route-id="@Model.Id" class="btn btn-outline-primary" type="submit">Alterar senha</a>
+                                </div>
+
+                                <div class="">
+                                    <div class="form-check">
+                                       @* <input class="form-check-input" value="true" asp-for="LockoutEnabled" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>*@
+                                        @Html.RadioButton("LockoutEnabled",false, true, new { @class = "form-check-input", @name = "flexRadioDefault", @id = "flexRadioDefault1"})
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Habilitar Conta
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        @*<input class="form-check-input" value="false" asp-for="LockoutEnabled" type="radio" name="flexRadioDefault" id="flexRadioDefault2">*@
+                                        @Html.RadioButton("LockoutEnabled",true, new { @class = "form-check-input", @name = "flexRadioDefault", @id = "flexRadioDefault2"})
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Bloquear Conta
+                                        </label>
+                                    </div>
+                                    <span asp-validation-for="Ramal" class="text-danger"></span>
+                                </div>
                             </div>
 
                             <div class="col-12">

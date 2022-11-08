@@ -14,6 +14,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
+    options.Lockout.AllowedForNewUsers = true;
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = false;
     options.Password.RequireNonAlphanumeric = false;
