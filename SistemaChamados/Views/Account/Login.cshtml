@@ -3,7 +3,7 @@
     ViewData["Title"] = "Login";
     Layout = "_LayoutBlanck";
 }
-<div class="">
+<div class="login">
     <div class="area">
         <ul class="circles">
             <li></li>
@@ -25,7 +25,7 @@
                         <div class="d-flex justify-content-center py-4">
                             <a class="logo d-flex align-items-center w-auto">
                                 <img src="~/images/logo.png" alt="">
-                                <span class="d-lg-block">Sistema Chamados</span>
+                                <span class="d-lg-block">SD Chamados</span>
                             </a>
                         </div><!-- End Logo -->
 
@@ -34,7 +34,7 @@
                             <div class="card-body">
 
                                 <div class="pt-4 pb-2">
-                                <h5 class="card-title text-center pb-0 fs-4">Logar com minha conta</h5>
+                                <h5 class="card-title text-center pb-0 fs-4">Login</h5>
                                 </div>
 
                                 <form id="account" method="post">
@@ -52,12 +52,15 @@
                                         <span asp-validation-for="Password" class="text-danger"></span>
                                     </div>
 
-                                    <div class="col-12">
-                                        <div class="form-check">
+                                    <div class="row mb-3">
+                                        <div class="form-check col-5">
                                             <input asp-for="RememberMe" class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe" />
                                             <label class="form-check-label" asp-for="RememberMe">
                                                 @Html.DisplayNameFor(m => m.RememberMe)
                                             </label>
+                                        </div>
+                                        <div class="col-7" style="text-decoration: none;text-align: end;">
+                                            <a style="color: gray;" href="">Esqueci minha senha</a>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -69,50 +72,8 @@
                     </div>
                 </div>
             </div>
-          </section>
-        </div>
-
-    @*<div class="area">
-        <ul class="circles">
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>
-        <form id="account" method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-
-            <div class="form-floating mb-3">
-                <input id="floatingInput" asp-for="CpfNumber" class="form-control" placeholder="CpfNumber" />
-                <label for="floatingInput" asp-for="CpfNumber"></label>
-                <span asp-validation-for="CpfNumber" class="text-danger"></span>
-            </div>
-
-            <div class="form-floating mb-3">
-                <input id="floatingPassword" asp-for="Password" class="form-control" placeholder="Password" />
-                <label for="floatingPassword" asp-for="Password"></label>
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <div class="checkbox">
-                    <label asp-for="RememberMe">
-                        <input asp-for="RememberMe" />
-                        @Html.DisplayNameFor(m => m.RememberMe)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="custom-btn">Login</button>
-            </div>
-        </form>
-    </div>*@
+        </section>
+    </div>
 </div>
 
 @section Scripts {

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SistemaChamados.Migrations
 {
-    public partial class Initial : Migration
+    public partial class updatedatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,7 +31,6 @@ namespace SistemaChamados.Migrations
                     Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     CpfNumber = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Phone = table.Column<string>(type: "varchar(20)", nullable: false),
                     Department = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: false),
                     Supervisor = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: false),
                     Ramal = table.Column<int>(type: "int", nullable: false),
@@ -173,6 +172,7 @@ namespace SistemaChamados.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Decription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AnexoUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AspNetUsersId = table.Column<int>(type: "int", nullable: false),
                     UserCustomId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },

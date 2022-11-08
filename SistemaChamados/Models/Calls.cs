@@ -9,7 +9,7 @@ namespace SistemaChamados.Models
 {
     public class Calls
     {
-        public int CallsId { get; set; }
+        public string CallsId { get; set; }
 
         [Required(ErrorMessage = "Nome vazio"), Display(Name = "Nome")]
         public string Name { get; set; } = string.Empty;
@@ -25,6 +25,7 @@ namespace SistemaChamados.Models
         public string Title { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Descrição vazio"), Display(Name = "Descrição")]
+
         public string Decription { get; set; } = string.Empty;
 
         public string AnexoUrl { get; set; } = string.Empty;
@@ -32,9 +33,19 @@ namespace SistemaChamados.Models
         [NotMapped]
         public IFormFile? Anexo { get; set; }
 
-        public int AspNetUsersId { get; set; }
+        [Required]
+        public string Status { get; set; } = string.Empty;
+
+        public string AspNetUsersId { get; set; }
 
         [Display(Name = "Usuário")]
         public UserCustom? UserCustom { get; set; }
+    }
+
+    public enum Status
+    {
+        Aberto,
+        Andamento,
+        Fechado
     }
 }

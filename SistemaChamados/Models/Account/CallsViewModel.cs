@@ -30,6 +30,8 @@ namespace SistemaChamados.Models.Account
         [NotMapped]
         public IFormFile? Anexo { get; set; }
 
+        public string Status { get; set; } = string.Empty;
+
         public int AspNetUsersId { get; set; }
 
         [Display(Name = "Usuário")]

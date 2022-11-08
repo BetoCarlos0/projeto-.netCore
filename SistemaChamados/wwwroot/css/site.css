@@ -7,7 +7,6 @@ body {
     font-family: 'Exo', sans-serif;
 }
 
-
 .context {
     width: 100%;
     position: absolute;
@@ -248,6 +247,9 @@ h6 {
 .form-floating>label {
     left: 10px;
 }
+.form-check {
+    padding-left: 2.2em;
+}
 
 .dropdown-menu {
     border-radius: 4px;
@@ -379,7 +381,8 @@ h6 {
 }
 
 /* Card */
-.card {
+.login .card {
+    width: 350px;
     margin-bottom: 30px;
     border: none;
     border-radius: 5px;
@@ -520,11 +523,6 @@ h6 {
     line-height: 1;
 }
 
-@media (min-width: 1200px) {
-    .logo {
-        width: 280px;
-    }
-}
 
 .logo img {
     max-height: 26px;

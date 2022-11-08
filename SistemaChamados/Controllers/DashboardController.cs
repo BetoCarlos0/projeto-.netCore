@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SistemaChamados.Data;
 using SistemaChamados.Data.Identity;
+using SistemaChamados.Models;
 using SistemaChamados.Models.Account;
 using System.Data;
 
@@ -14,12 +16,14 @@ namespace SistemaChamados.Controllers
     {
         private readonly UserManager<UserCustom> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        //private readonly SignInManager<UserCustom> _signInManager;
+        private readonly SistemaDbContext _context;
+        private readonly SignInManager<UserCustom> _signInManager;
 
-        public DashboardController(UserManager<UserCustom> userManager, RoleManager<IdentityRole> roleManager)
+        public DashboardController(UserManager<UserCustom> userManager, RoleManager<IdentityRole> roleManager, SistemaDbContext dbContext)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _context = dbContext;
         }
 
         public IActionResult Home()
@@ -132,7 +136,7 @@ namespace SistemaChamados.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ChangePassword(string id)
+        public IActionResult ChangePassword(string id)
         {
             var change = new ChangePasswordViewModel()
             {
@@ -182,8 +186,34 @@ namespace SistemaChamados.Controllers
             return View(id);
         }
 
-        public async Task<IActionResult> Calls(CallsViewModel model)
+        public async Task<IActionResult> ListCalls()
         {
+            var calls = await _context.Calls.ToListAsync();
+
+            return View(calls);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateCall()
+        {            
+            ViewBag.Status = Enum.GetNames(typeof(Status));
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateCall([Bind("AspNetUsersId, Name, Ramal, Phone, Status, Decription, Title")] Calls model)
+        {
+            ViewBag.Status = Enum.GetNames(typeof(Status));
+
+            if (ModelState.IsValid)
+            {
+                await _context.AddAsync(model);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("ListCalls");
+            }
+
             return View(model);
         }
     }
