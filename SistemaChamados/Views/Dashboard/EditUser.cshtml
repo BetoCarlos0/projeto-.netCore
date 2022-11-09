@@ -22,7 +22,7 @@
                     <div class="card-body">
                         <br />
                         <!-- Multi Columns Form -->
-                        <form asp-action="EditUser" method="post" class="row">
+                        <form asp-controller="Dashboard" asp-action="EditUser" method="post" class="row">
                             <input type="hidden" asp-for="Id" />
                             <div class="form-floating mb-3 col-6">
                                 <input id="floatingName" asp-for="Name" class="form-control" placeholder="Name" />

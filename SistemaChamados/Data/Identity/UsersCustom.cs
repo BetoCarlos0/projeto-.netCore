@@ -36,8 +36,22 @@ namespace SistemaChamados.Data.Identity
         [Range(1, 100, ErrorMessage = "Ramal deve ser maior que 0 e menor que 100")]
         public int Ramal { get; set; }
 
-        [NotMapped]
+        [NotMapped, Display(Name = "Cargo")]
         public string? Role { get; set; } = string.Empty;
+
+
+        [Required(ErrorMessage = "Senha atual vazia"),Display(Name = "Senha atual"), DataType(DataType.Password)]
+        [NotMapped]
+        public string CurrentPassword { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Senha Vazia"), Display(Name = "Senha"), DataType(DataType.Password)]
+        [NotMapped]
+        public string Password { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Senha de Confirmação Vazia"), Display(Name = "Confirmar Senha"), DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Senhas informadas diferentes")]
+        [NotMapped]
+        public string ConfirmPassword { get; set; } = string.Empty;
 
         [Display(Name = "Chamados")]
         public IEnumerable<Calls> Calls { get; set; } = Enumerable.Empty<Calls>();

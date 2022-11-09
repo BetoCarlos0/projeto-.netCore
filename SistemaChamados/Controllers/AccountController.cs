@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SistemaChamados.Data;
 using SistemaChamados.Data.Identity;
 using SistemaChamados.Models.Account;
+using System.Data;
 using System.Threading.Tasks;
 
 
@@ -69,6 +71,54 @@ namespace SistemaChamados.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UserAccount(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            user.Role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+
+            return View(user);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditUser([Bind("Id, Name, CpfNumber, Email, BirthDate, Role, Supervisor, Department, Ramal, PhoneNumber")] UserCustom model)
+        {
+            var user = await _userManager.FindByIdAsync(model.Id);
+
+            user.Name = model.Name;
+            user.UserName = model.CpfNumber;
+            user.CpfNumber = model.CpfNumber;
+            user.BirthDate = model.BirthDate;
+            user.Department = model.Department;
+            user.Supervisor = model.Supervisor;
+            user.PhoneNumber = model.PhoneNumber;
+            user.Ramal = model.Ramal;
+            user.Email = model.Email;
+
+            await _userManager.UpdateAsync(user);
+
+            return RedirectToAction(nameof(UserAccount), new { model.Id });
+        }
+
+         [HttpPost]
+        public async Task<IActionResult> ChangePassword(UserCustom model)
+        {
+            var user = await _userManager.FindByIdAsync(model.Id);
+
+            var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.Password);
+            if (result.Succeeded)
+                return RedirectToAction(nameof(UserAccount), new { model.Id });
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+            return RedirectToAction(nameof(UserAccount), new { model.Id });
         }
     }
 }

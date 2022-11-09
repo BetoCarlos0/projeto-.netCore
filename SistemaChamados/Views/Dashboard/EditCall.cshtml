@@ -22,7 +22,7 @@
                     <div class="card-body">
                         <br />
                         <!-- Multi Columns Form -->
-                        <form asp-action="EditCall" method="post" class="row">
+                        <form asp-controller="Dashboard" asp-action="EditCall" method="post" class="row">
                             <input type="hidden" value="@Model.CallsId" asp-for="CallsId" />
                             <input type="hidden" value="@Model.AspNetUsersId" asp-for="AspNetUsersId" />
 

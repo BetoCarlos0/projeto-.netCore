@@ -1,0 +1,223 @@
+﻿@model SistemaChamados.Data.Identity.UserCustom
+@{
+    ViewData["Title"] = "Conta";
+    Layout = "_Layout";
+}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Minha Conta</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Home">Home</a></li>
+                <li class="breadcrumb-item active">Conta</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+        <div class="row">
+            <div class="col-xl-4">
+
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                        <img src="~/images/profile.png" alt="Profile" class="rounded-circle">
+                        <h2>@Model.Name</h2>
+                        <h3>@Model.Role</h3>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xl-8">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Detalhes</button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Editar dados</button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Mudar senha</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content pt-2">
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                <h5 class="card-title">Informações</h5>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">Nome</div>
+                                    <div class="col-lg-9 col-md-8">@Model.Name</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">CPF</div>
+                                    <div class="col-lg-9 col-md-8">@Model.CpfNumber</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Data de Nascimento</div>
+                                    <div class="col-lg-9 col-md-8">@Model.BirthDate</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Email</div>
+                                    <div class="col-lg-9 col-md-8">@Model.Email</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Telefone</div>
+                                    <div class="col-lg-9 col-md-8">@Model.PhoneNumber</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Ramal</div>
+                                    <div class="col-lg-9 col-md-8">@Model.Ramal</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Cargo</div>
+                                    <div class="col-lg-9 col-md-8">@Model.Role</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Departamento</div>
+                                    <div class="col-lg-9 col-md-8">@Model.Department</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Supervisor</div>
+                                    <div class="col-lg-9 col-md-8">@Model.Supervisor</div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                                <!-- Profile Edit Form -->
+                                <form asp-controller="Account" asp-action="EditUser" method="post">
+                                    <input type="hidden" asp-for="Id" />
+                                    <div class="row mb-3">
+                                        <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Imagem</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <img src="~/images/profile.png" alt="Profile">
+                                            @*<div class="pt-2">
+                                                <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
+                                                <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                                            </div>*@
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="floatingName" asp-for="Name" class="col-md-4 col-lg-3 col-form-label"></label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input asp-for="Name" class="form-control" placeholder="Name" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="floatingName" asp-for="CpfNumber" class="col-md-4 col-lg-3 col-form-label"></label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input id="floatingName" asp-for="CpfNumber" class="form-control" placeholder="CpfNumber" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="floatingName" asp-for="PhoneNumber" class="col-md-4 col-lg-3 col-form-label"></label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input id="floatingName" asp-for="PhoneNumber" class="form-control" placeholder="PhoneNumber" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="floatingName" asp-for="Email" class="col-md-4 col-lg-3 col-form-label"></label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input id="floatingName" asp-for="Email" class="form-control" placeholder="Email" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="floatingName" asp-for="BirthDate" class="col-md-4 col-lg-3 col-form-label"></label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input id="floatingName" asp-for="BirthDate" class="form-control" placeholder="BirthDate" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="floatingName" asp-for="Department" class="col-md-4 col-lg-3 col-form-label"></label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input id="floatingName" asp-for="Department" class="form-control" placeholder="Department" />
+                                        </div>
+                                    </div>
+
+                                     <div class="row mb-3">
+                                        <label for="floatingName" asp-for="Supervisor" class="col-md-4 col-lg-3 col-form-label"></label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input id="floatingName" asp-for="Supervisor" class="form-control" placeholder="Supervisor" />
+                                        </div>
+                                    </div>
+
+                                     <div class="row mb-3">
+                                        <label for="floatingName" asp-for="Ramal" class="col-md-4 col-lg-3 col-form-label"></label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input id="floatingName" asp-for="Ramal" class="form-control" placeholder="Ramal" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="floatingName" asp-for="Role" class="col-md-4 col-lg-3 col-form-label"></label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input id="floatingName" asp-for="Role" class="form-control" placeholder="Role" disabled />
+                                        </div>
+                                    </div>
+
+                                    <div class="text-left">
+                                        <button type="submit" class="btn btn-primary">Salvar alterações</button>
+                                    </div>
+                                </form><!-- End Profile Edit Form -->
+                            </div>
+
+                            <div class="tab-pane fade pt-3" id="profile-change-password">
+                                <!-- Change Password Form -->
+                                <form asp-controller="Account" asp-action="ChangePassword" method="post">
+                                    <input type="hidden" asp-for="Id" />
+                                    <div class="row mb-3">
+                                        <label for="floatingCurentPass" asp-for="CurrentPassword" class="col-md-4 col-lg-3 col-form-label"></label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input id="floatingCurentPass" asp-for="CurrentPassword" class="form-control" placeholder="Senha Atual" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="floatingPass" asp-for="Password" class="col-md-4 col-lg-3 col-form-label"></label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input id="floatingPass" asp-for="Password" class="form-control" placeholder="Senha" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="floatingConfiPass" asp-for="ConfirmPassword" class="col-md-4 col-lg-3 col-form-label"></label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input id="floatingConfiPass" asp-for="ConfirmPassword" class="form-control" placeholder="Confirmar Senha" />
+                                        </div>
+                                    </div>
+
+                                    <div class="text-left">
+                                        <button type="submit" class="btn btn-primary">Alterar Senha</button>
+                                    </div>
+                                </form><!-- End Change Password Form -->
+                            </div>
+                        </div><!-- End Bordered Tabs -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->

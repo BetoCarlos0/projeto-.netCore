@@ -27,7 +27,7 @@
                     <div class="card-body">
                         <br />
                         <!-- Multi Columns Form -->
-                        <form asp-action="CreateCall" method="post" class="row">
+                        <form asp-controller="Dashboard" asp-action="CreateCall" method="post" class="row">
                             <input type="hidden" value="@user.Id" asp-for="AspNetUsersId" />
 
                             <div class="form-floating mb-3">

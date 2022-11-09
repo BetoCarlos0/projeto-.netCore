@@ -100,7 +100,6 @@ namespace SistemaChamados.Controllers
         {
             ViewBag.Roles = _roleManager.Roles.ToList();
 
-
             var user = await _userManager.FindByIdAsync(model.Id);
 
             if (model.LockoutEnabled == true)
@@ -164,29 +163,6 @@ namespace SistemaChamados.Controllers
                 }
             }
             return View(model);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> DeleteUser(string id)
-        {
-            var user = await _userManager.FindByIdAsync(id);
-            ViewBag.GetUserRole = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
-
-            if (user == null) return NotFound();
-
-            return View(user);
-        }
-
-        [HttpPost, ActionName("DeleteUser")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteUserConfirmed(string id)
-        {
-            var user = await _userManager.FindByIdAsync(id);
-
-            if ((await _userManager.DeleteAsync(user)).Succeeded)
-                return RedirectToAction("ListUsers");
-
-            return View(id);
         }
 
         public async Task<IActionResult> ListCalls()
