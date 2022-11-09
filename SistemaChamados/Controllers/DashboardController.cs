@@ -85,11 +85,9 @@ namespace SistemaChamados.Controllers
         {
             ViewBag.Roles = _roleManager.Roles.ToList();
 
-            if (id == null) return RedirectToAction("ListUsers");
-
             var user = await _userManager.FindByIdAsync(id);
 
-            ViewBag.RoleUserEdit = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+            user.Role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
 
             return View(user);
         }
@@ -130,31 +128,21 @@ namespace SistemaChamados.Controllers
                     await _userManager.RemoveFromRoleAsync(user, role);
                     await _userManager.AddToRoleAsync(user, model.Role);
                 }
-                return RedirectToAction("ListUsers");
+                return RedirectToAction(nameof(EditUser), new {user.Id});
             }
             return View(model);
         }
 
-        [Authorize(Roles = "Administrador")]
-        [HttpGet]
-        public IActionResult ChangePassword(string id)
-        {
-            var change = new ChangePasswordViewModel()
-            {
-                UserId = id
-            };
-            return View(change);
-        }
 
         [Authorize(Roles = "Administrador")]
         [HttpPost]
-        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        public async Task<IActionResult> ChangePassword(UserCustom model)
         {
-            var user = await _userManager.FindByIdAsync(model.UserId);
+            var user = await _userManager.FindByIdAsync(model.Id);
 
-            var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+            var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.Password);
             if (result.Succeeded)
-                return RedirectToAction("ListUsers");
+                return RedirectToAction(nameof(EditUser), new { model.Id });
             else
             {
                 foreach (var error in result.Errors)
@@ -162,7 +150,7 @@ namespace SistemaChamados.Controllers
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-            return View(model);
+            return RedirectToAction(nameof(EditUser), new { model.Id });
         }
 
         public async Task<IActionResult> ListCalls()

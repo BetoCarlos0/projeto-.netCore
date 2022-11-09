@@ -103,7 +103,7 @@ namespace SistemaChamados.Controllers
             return RedirectToAction(nameof(UserAccount), new { model.Id });
         }
 
-         [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> ChangePassword(UserCustom model)
         {
             var user = await _userManager.FindByIdAsync(model.Id);
