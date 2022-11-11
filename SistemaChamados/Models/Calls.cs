@@ -9,7 +9,7 @@ namespace SistemaChamados.Models
 {
     public class Calls
     {
-        [Key]
+        [Key, Display(Name = "ID")]
         public int CallsId { get; set; }
 
         [Required(ErrorMessage = "Nome vazio"), Display(Name = "Nome")]
@@ -39,6 +39,8 @@ namespace SistemaChamados.Models
 
         [Display(Name = "Solução")]
         public string? Solution { get; set; } = string.Empty;
+
+        public string Operador { get; set; } = string.Empty;
 
         [Required]
         public string AspNetUsersId { get; set; } = string.Empty;

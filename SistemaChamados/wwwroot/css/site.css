@@ -153,6 +153,10 @@ body {
     scroll-behavior: smooth;
 }
 
+.search form .form-floating input {
+    height: 40px;
+}
+
 body {
     font-family: "Open Sans", sans-serif;
     background: #f6f9ff;

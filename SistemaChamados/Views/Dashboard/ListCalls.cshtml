@@ -11,7 +11,7 @@
 
 <main id="main" class="main">
 
-    <div class="pagetitle col-lg-10" style="display: flex; flex-direction: column; margin: 0 auto;">
+    <div class="pagetitle col-lg-11" style="display: flex; flex-direction: column; margin: 0 auto;">
         <h1>@ViewData["Title"]</h1>
         <nav>
             <ol class="breadcrumb">
@@ -22,7 +22,17 @@
     </div><!-- End Page Title -->
     <section class="section">
         <div class="row" style="justify-content: center;">
-            <div class="col-lg-10">
+            <div class="col-lg-11">
+                <div class="d-flex align-items-center mb-3">
+                    <form asp-controller="Dashboard" asp-action="ListCalls" method="get">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1">ID</span>
+                            <input type="text" class="form-control" placeholder="ID do chamado" name="SearchString" value="@ViewData["CurrentFilter"]" aria-label="ID" aria-describedby="basic-addon1">
+                            <input type="submit" value="Pesquisar" class="btn btn-secondary" />
+                        </div>
+                    </form>
+                    <a asp-action="Home" class="ms-3">voltar para Lista</a>
+                </div>
                 <a type="button" asp-action="CreateCall" class="mb-3 btn btn-primary btn-lg">Novo Chamado</a>
                 <div class="card">
                     <div style="padding: 1rem 2rem;">
@@ -30,6 +40,9 @@
                             <thead>
                                 <tr>
                                     <th>
+                                        @Html.DisplayNameFor(model => model.CallsId)
+                                    </th>
+                                    <th width="100px">
                                         @Html.DisplayNameFor(model => model.Status)
                                     </th>
                                     <th>
@@ -47,6 +60,9 @@
                                     <th>
                                         @Html.DisplayNameFor(model => model.Solution)
                                     </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Operador)
+                                    </th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -54,6 +70,9 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CallsId)
+                                        </td>
                                         <td>
                                             @if (item.Status == "Aberto")
                                             {
@@ -89,17 +108,17 @@
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Solution)
                                         </td>
-                                        @if (!User.IsInRole("Usuario"))
-                                        {
-                                            <td class="crud-button" style="text-align: end;">
-                                                <a class="icon-edit me-3" asp-action="EditCall" asp-route-id="@item.CallsId">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-                                                    </svg>
-                                                </a>
-                                            </td>
-                                        }
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Operador)
+                                        </td>
+                                        <td class="crud-button" style="text-align: end;">
+                                            <a class="icon-edit me-3" asp-action="EditCall" asp-route-id="@item.CallsId">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                </svg>
+                                            </a>
+                                        </td>
                                     </tr>
                                 }
                             </tbody>

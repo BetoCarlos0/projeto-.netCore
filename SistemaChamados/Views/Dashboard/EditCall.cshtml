@@ -1,4 +1,5 @@
-﻿@model SistemaChamados.Models.Calls
+﻿@using SistemaChamados.Data.Identity
+@model SistemaChamados.Models.Calls
 @{
     ViewData["Title"] = "Editar Chamado";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -25,6 +26,9 @@
                         <form asp-controller="Dashboard" asp-action="EditCall" method="post" class="row">
                             <input type="hidden" value="@Model.CallsId" asp-for="CallsId" />
                             <input type="hidden" value="@Model.AspNetUsersId" asp-for="AspNetUsersId" />
+                            <input type="hidden" value="@Model.Name" asp-for="Name" />
+                            <input type="hidden" value="@Model.Phone" asp-for="Phone" />
+                            <input type="hidden" value="@Model.Ramal" asp-for="Ramal" />
 
                             <div class="form-floating mb-3">
                                 <select class="form-select" asp-for="Status" id="floatingSelect" aria-label="Floating label select example">
@@ -39,7 +43,7 @@
                                 <label for="floatingSelect" asp-for="Status">Cargo</label>
                                 <span asp-validation-for="Status" class="text-danger"></span>
                             </div>
-
+                            @if (User.IsInRole("Administrador")){
                             <div class="form-floating mb-3">
                                 <input id="floatingName" asp-for="Name" class="form-control" placeholder="Name" />
                                 <label for="floatingName" asp-for="Name"></label>
@@ -57,7 +61,22 @@
                                 <label for="floatingBith" asp-for="Ramal"></label>
                                 <span asp-validation-for="Ramal" class="text-danger"></span>
                             </div>
+                            }else{
+                            <div class="form-floating mb-3">
+                                    <input id="floatingName" value="@Model.Name" class="form-control" placeholder="Name" disabled/>
+                                <label for="floatingName">Nome</label>
+                            </div>
 
+                            <div class="form-floating mb-3">
+                                <input id="floatingEmail"  value="@Model.Phone" class="form-control" placeholder="Phone" disabled/>
+                                <label for="floatingEmail" >Telefone</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                    <input id="floatingBith" value="@Model.Ramal" class="form-control" placeholder="Ramal" disabled />
+                                <label for="floatingBith">Ramal</label>
+                            </div>
+                            }
                             <div class="form-floating mb-3">
                                 <input id="floatingPhone" asp-for="Title" class="form-control" placeholder="Title" />
                                 <label for="floatingPhone" asp-for="Title"></label>
@@ -74,6 +93,28 @@
                                 <textarea id="floatingDepar" asp-for="Solution" type="" class="form-control" style="height: 80px" placeholder="Solution"></textarea>
                                 <label for="floatingDepar" asp-for="Solution"></label>
                                 <span asp-validation-for="Solution" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <select class="form-select" asp-for="Operador" id="floatingSelect" aria-label="Floating label select example">
+                                    <option selected>Selecionar o Operador</option>
+                                    @foreach (var item in ViewBag.Operador)
+                                    {
+                                        if (Model.Operador != string.Empty){
+                                            if (Model.Operador == item){
+                                            <option selected value="@item">@item</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item">@item</option>
+                                            }
+
+                                        }else{
+                                            <option value="@item">@item</option>
+                                        }
+                                    }
+                                </select>
+                                <label for="floatingSelect" asp-for="Operador"></label>
+                                <span asp-validation-for="Operador" class="text-danger"></span>
                             </div>
 
                             <div class="col-12">

@@ -41,11 +41,12 @@
                             <li class="nav-item">
                                 <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Detalhes</button>
                             </li>
-
-                            <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Editar dados</button>
-                            </li>
-
+                            @if (Model.Role == "Administrador")
+                            {
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Editar dados</button>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Mudar senha</button>
                             </li>
@@ -100,6 +101,8 @@
                                 </div>
                             </div>
 
+                            @if (Model.Role == "Administrador")
+                            {
                             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
                                 <!-- Profile Edit Form -->
                                 <form asp-controller="Account" asp-action="EditUser" method="post">
@@ -163,7 +166,7 @@
                                         </div>
                                     </div>
 
-                                     <div class="row mb-3">
+                                        <div class="row mb-3">
                                         <label for="floatingName" asp-for="Supervisor" class="col-md-4 col-lg-3 col-form-label"></label>
                                         <div class="col-md-8 col-lg-9">
                                             <input id="floatingName" asp-for="Supervisor" class="form-control" placeholder="Supervisor" />
@@ -171,7 +174,7 @@
                                         </div>
                                     </div>
 
-                                     <div class="row mb-3">
+                                        <div class="row mb-3">
                                         <label for="floatingName" asp-for="Ramal" class="col-md-4 col-lg-3 col-form-label"></label>
                                         <div class="col-md-8 col-lg-9">
                                             <input id="floatingName" asp-for="Ramal" class="form-control" placeholder="Ramal" />
@@ -192,6 +195,7 @@
                                     </div>
                                 </form><!-- End Profile Edit Form -->
                             </div>
+                            }
 
                             <div class="tab-pane fade pt-3" id="profile-change-password">
                                 <!-- Change Password Form -->

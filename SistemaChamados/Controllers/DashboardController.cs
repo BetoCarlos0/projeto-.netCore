@@ -26,8 +26,26 @@ namespace SistemaChamados.Controllers
             _context = dbContext;
         }
 
-        public IActionResult Home()
+        public async Task<IActionResult> Home(int searcheId)
         {
+
+            if (User.IsInRole("Usuario"))
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var calls =  (_context.Calls.AsQueryable()).Where(x => x.AspNetUsersId == user.Id);
+
+                if (searcheId != 0)
+                {
+                    ViewData["CurrentFilter"] = searcheId;
+                    var call = calls.Where(s => s.CallsId.Equals(searcheId));
+                    return View(call);
+                }
+                else
+                {
+                    ViewData["CurrentFilter"] = null;
+                    return View(calls);
+                }
+            }
             return View();
         }
 
@@ -153,18 +171,29 @@ namespace SistemaChamados.Controllers
             return RedirectToAction(nameof(EditUser), new { model.Id });
         }
 
-        public async Task<IActionResult> ListCalls()
+        [Authorize(Roles = "Administrador, Operador")]
+        public async Task<IActionResult> ListCalls(string currentFilter,
+                                            string searchString,
+                                            int? pageNumber)
         {
-            var user = await _userManager.GetUserAsync(User);
-            var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
-            if (role == "Usuario")
+            if (searchString != null)
             {
-                return View(await _context.Calls.Where(x => x.AspNetUsersId == user.Id).ToListAsync());
+                pageNumber = 1;
             }
             else
             {
-                return View(await _context.Calls.ToListAsync());
+                searchString = currentFilter;
             }
+            ViewData["CurrentFilter"] = searchString;
+            int pageSize = 3;
+            var calls = _context.Calls.AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                calls = calls.Where(s => s.CallsId.ToString().Contains(searchString));
+            }
+
+            return View(await PaginatedList<Calls>.CreateAsync(calls.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         [HttpGet]
@@ -185,7 +214,14 @@ namespace SistemaChamados.Controllers
             {
                 await _context.AddAsync(model);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("ListCalls");
+
+                var Getuser = await _userManager.FindByIdAsync(model.AspNetUsersId);
+
+                if ((await _userManager.GetRolesAsync(Getuser)).FirstOrDefault() != "Usuario")
+                    return RedirectToAction("ListCalls");
+                else
+                    return RedirectToAction("Home");
+
             }
 
             return View(model);
@@ -197,13 +233,17 @@ namespace SistemaChamados.Controllers
         {
             ViewBag.Status = Enum.GetNames(typeof(Status));
             var call = await _context.Calls.FindAsync(id);
+            var operadores = await _userManager.GetUsersInRoleAsync("Operador");
+
+            ViewBag.Operador = (await _userManager.GetUsersInRoleAsync("Operador")).Select(x => x.Name).ToList();
+
             return View(call);
         }
 
         [Authorize(Roles = "Administrador, Operador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditCall([Bind("CallsId, AspNetUsersId, Name, Ramal, Phone, Status, Decription, Title, Solution")] Calls model)
+        public async Task<IActionResult> EditCall([Bind("CallsId, AspNetUsersId, Name, Ramal, Phone, Status, Decription, Title, Solution, Operador")] Calls model)
         {
             ViewBag.Status = Enum.GetNames(typeof(Status));
             if (ModelState.IsValid)

@@ -15,7 +15,9 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a asp-action="Home">Home</a></li>
-                <li class="breadcrumb-item"><a asp-action="ListCalls">Chamados</a></li>
+                @if (!User.IsInRole("Usuario")){
+                    <li class="breadcrumb-item"><a asp-action="ListCalls">Chamados</a></li>
+                }
                 <li class="breadcrumb-item active">@ViewData["Title"]</li>
             </ol>
         </nav>
@@ -29,6 +31,9 @@
                         <!-- Multi Columns Form -->
                         <form asp-controller="Dashboard" asp-action="CreateCall" method="post" class="row">
                             <input type="hidden" value="@user.Id" asp-for="AspNetUsersId" />
+                            <input type="hidden" value="@user.Name" asp-for="Name" />
+                            <input type="hidden" value="@user.PhoneNumber" asp-for="Phone" />
+                            <input type="hidden" value="@user.Ramal" asp-for="Ramal" />
 
                             <div class="form-floating mb-3">
                                 <select class="form-select" asp-for="Status" id="floatingSelect" aria-label="Floating label select example">
@@ -43,26 +48,23 @@
                                         }
                                     }
                                 </select>
-                                <label for="floatingSelect" asp-for="Status">Cargo</label>
+                                <label for="floatingSelect" asp-for="Status"></label>
                                 <span asp-validation-for="Status" class="text-danger"></span>
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input id="floatingName" asp-for="Name" class="form-control" placeholder="Name" />
-                                <label for="floatingName" asp-for="Name"></label>
-                                <span asp-validation-for="Name" class="text-danger"></span>
+                                <input id="floatingName" class="form-control" value="@user.Name" placeholder="Nome" disabled />
+                                <label for="floatingName">Nome</label>
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input id="floatingEmail" asp-for="Phone" class="form-control" placeholder="Phone" />
-                                <label for="floatingEmail" asp-for="Phone"></label>
-                                <span asp-validation-for="Phone" class="text-danger"></span>
+                                <input id="floatingEmail" class="form-control" value="@user.PhoneNumber" placeholder="Telefone" disabled />
+                                <label for="floatingEmail">Telefone</label>
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input id="floatingBith" asp-for="Ramal" class="form-control" placeholder="Ramal" />
-                                <label for="floatingBith" asp-for="Ramal"></label>
-                                <span asp-validation-for="Ramal" class="text-danger"></span>
+                                <input id="floatingBith" class="form-control" value="@user.Ramal" placeholder="Ramal" disabled/>
+                                <label for="floatingBith">Ramal</label>
                             </div>
 
                             <div class="form-floating mb-3">
@@ -83,7 +85,11 @@
                         </form>
                     </div>
                 </div>
-                <a asp-action="ListCalls" type="button" class="btn btn-secondary btn-sm">Voltar</a>
+                @if (User.IsInRole("Usuario")){
+                    <a asp-controller="Dashboard" asp-action="Home" type="button" class="btn btn-secondary btn-sm">Voltar</a>
+                }else{
+                    <a asp-controller="Dashboard" asp-action="ListCalls" type="button" class="btn btn-secondary btn-sm">Voltar</a>
+                }
             </div>
         </div>
     </section>

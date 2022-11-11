@@ -1,10 +1,126 @@
-﻿@{
-    string username = User.Identity.Name;
-    ViewData["Title"] = "Dashboard";
+﻿@model IEnumerable<SistemaChamados.Models.Calls>
+@{
+    ViewData["Title"] = "Chamados";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<main id="main" class="main">
 
-<div>
-
-    welcome @username
-</div>
+    @if (User.IsInRole("Usuario"))
+    {
+        <div class="pagetitle col-lg-11" style="display: flex; flex-direction: column; margin: 0 auto;">
+            <h1>@ViewData["Title"]</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </nav>
+        </div>
+        <!-- End Page Title -->
+        <section class="section">
+            <div class="row" style="justify-content: center;">
+                <div class="col-lg-11">
+                    <div class="d-flex align-items-center mb-3">
+                        <form asp-controller="Dashboard" asp-action="Home" method="get">
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1">ID</span>
+                                <input type="text" class="form-control" placeholder="ID do chamado" name="searcheId" value="@ViewData["CurrentFilter"]" aria-label="ID" aria-describedby="basic-addon1">
+                                <input type="submit" value="Pesquisar" class="btn btn-secondary" />
+                            </div>
+                        </form>
+                        <a asp-action="Home" class="ms-3">voltar para Lista</a>
+                    </div>
+                    <a type="button" asp-action="CreateCall" class="mb-3 btn btn-primary btn-lg">Novo Chamado</a>
+                    <div class="card">
+                        <div style="padding: 1rem 2rem;">
+                            <table class="table  table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.CallsId)
+                                        </th>
+                                        <th width="100px">
+                                            @Html.DisplayNameFor(model => model.Status)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Name)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Phone)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Title)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Decription)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Solution)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Operador)
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CallsId)
+                                            </td>
+                                            <td>
+                                                @if (item.Status == "Aberto")
+                                                {
+                                                    <span class="badge text-bg-success bg-success">
+                                                        @Html.DisplayFor(modelItem => item.Status)
+                                                    </span>
+                                                }
+                                                @if (item.Status == "Andamento")
+                                                {
+                                                    <span class="badge text-bg-warning bg-warning">
+                                                        @Html.DisplayFor(modelItem => item.Status)
+                                                    </span>
+                                                }
+                                                @if (item.Status == "Fechado")
+                                                {
+                                                    <span class="badge text-bg-dark bg-dark">
+                                                        @Html.DisplayFor(modelItem => item.Status)
+                                                    </span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Name)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Phone)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Title)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Decription)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Solution)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Operador)
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+</main><!-- End #main -->
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
