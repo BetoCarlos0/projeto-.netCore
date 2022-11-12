@@ -32,6 +32,7 @@
                         <!-- Multi Columns Form -->
                         <form asp-controller="Dashboard" asp-action="CreateCall" method="post" class="row">
                             <input type="hidden" value="@user.Id" asp-for="AspNetUsersId" />
+                            <input type="hidden" value="Aberto" asp-for="Status" />
 
                             <div class="form-floating mb-3">
                                 <select class="form-select" asp-for="Status" id="floatingSelect" aria-label="Floating label select example" disabled>
