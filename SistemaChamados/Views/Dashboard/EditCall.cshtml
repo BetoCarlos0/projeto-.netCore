@@ -95,6 +95,7 @@
                             </div>
                             <div class="form-floating mb-3">
                                 <select class="form-select" asp-for="Operador" id="floatingSelect" aria-label="Floating label select example">
+                                    <option>Selecionar o Operador</option>
                                     @foreach (var item in ViewBag.Operador)
                                     {
                                         if (Model.Operador != string.Empty){

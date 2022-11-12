@@ -27,31 +27,35 @@ namespace SistemaChamados.Controllers
             _context = dbContext;
         }
 
-        public async Task<IActionResult> Home(int searcheId)
+        public async Task<IActionResult> Home()
         {
+            var calls = _context.Calls.AsQueryable();
 
-            if (User.IsInRole("Usuario"))
-            {
-                var user = await _userManager.GetUserAsync(User);
-                var calls =  (_context.Calls.AsQueryable()).Where(x => x.AspNetUsersId == user.Id);
-
-                if (searcheId != 0)
-                {
-                    ViewData["CurrentFilter"] = searcheId;
-                    var call = calls.Where(s => s.CallsId.Equals(searcheId));
-                    return View(call);
-                }
-                else
-                {
-                    ViewData["CurrentFilter"] = null;
-                    return View(calls);
-                }
-            }
             if (User.IsInRole("Administrador"))
             {
-                ViewBag.Dados = new int[] { 3, 4, 9 };
+                var viewData = new Viewdata()
+                {
+                    Count = calls.Count(),
+                    Aberto = calls.Where(x => x.Status.Equals("Aberto")).Count(),
+                    Andamnto = calls.Where(x => x.Status.Equals("Andamento")).Count(),
+                    Fechado = calls.Where(x => x.Status.Equals("Fechado")).Count(),
+                };
+                return View(viewData);
             }
-            return View();
+            if (User.IsInRole("Operador"))
+            {
+                var user = await _userManager.GetUserAsync(User);
+                calls = calls.Where(x => x.Operador.Equals(user.Name));
+
+                var viewData = new Viewdata()
+                {
+                    Count = calls.Count(),
+                    Andamnto = calls.Where(x => x.Status.Equals("Andamento")).Count(),
+                    Fechado = calls.Where(x => x.Status.Equals("Fechado")).Count(),
+                };
+                return View(viewData);
+            }
+            return RedirectToAction("ListCalls");
         }
 
         [Authorize(Roles = "Administrador")]
@@ -184,16 +188,19 @@ namespace SistemaChamados.Controllers
             return RedirectToAction(nameof(EditUser), new { model.Id });
         }
 
-        [Authorize(Roles = "Administrador, Operador")]
         public async Task<IActionResult> ListCalls(int searcheId)
         {
             var calls = _context.Calls.AsQueryable();
+            var user = await _userManager.GetUserAsync(User);
 
             if (User.IsInRole("Operador"))
             {
-                var user = await _userManager.GetUserAsync(User);
                 calls = calls.Where(x => x.Operador == user.Name || x.Operador == string.Empty).AsQueryable();
 
+            }
+            if (User.IsInRole("Usuario"))
+            {
+                calls = _context.Calls.Where(x => x.AspNetUsersId == user.Id).AsQueryable();
             }
             if (searcheId != 0)
             {
@@ -215,11 +222,9 @@ namespace SistemaChamados.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreateCall()
+        public  IActionResult CreateCall()
         {            
             ViewBag.Status = Enum.GetNames(typeof(Status));
-            //var user = await _userManager.GetUserAsync(User);
-
             return View();
         }
 
@@ -264,10 +269,11 @@ namespace SistemaChamados.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditCall([Bind("CallsId, AspNetUsersId, Name, Ramal, Phone, Status, Decription, Title, Solution, Operador")] Calls model)
         {
-            if (model.Operador == "Selecionar o Operador")
-                model.Operador = null;
-
             ViewBag.Status = Enum.GetNames(typeof(Status));
+
+            if (model.Operador == "Selecionar o Operador")
+                model.Operador = string.Empty;
+
             if (ModelState.IsValid)
             {
                 _context.Update(model);

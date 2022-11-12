@@ -2,150 +2,26 @@
 @using SistemaChamados.Data.Identity
 @inject SistemaChamados.Data.SistemaDbContext _context;
 @inject UserManager<UserCustom> UserManager
-@model IEnumerable<SistemaChamados.Models.Calls>
+@model SistemaChamados.Models.Viewdata
 @{
     ViewData["Title"] = "Chamados";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var user = await UserManager.GetUserAsync(User);
 }
 <main id="main" class="main">
-    @if (User.IsInRole("Administrador")){
-        //var context = _context;
-        //var calls = context.Calls.GroupBy(x => x.Status).Select(x => new ViewData { count = x.Count(), x.First() });
-
-
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Chamados Gerais</h5>
 
-                    <!-- Pie Chart -->
                     <canvas id="pieChart" style="max-height: 400px;"></canvas>
-                    <!-- End Pie CHart -->
-
                 </div>
+                <p class="text-center">Total: @Model.Count Chamados</p>
             </div>
         </div>
-        <script src="~/lib/chart.js/chart.min.js"></script>
-    }
-
-
-    @if (User.IsInRole("Usuario"))
-    {
-    <!-- End Page Title -->
-    <section class="section">
-        <div class="row" style="justify-content: center;">
-            <div class="pagetitle col-lg-9">
-                <h1>@ViewData["Title"]</h1>
-                <nav>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item active">@ViewData["Title"]</li>
-                    </ol>
-                </nav>
-            </div>
-                <div class="col-lg-9">
-                    <div class="d-flex justify-content-between">
-                        <a type="button" asp-action="CreateCall" class="mb-3 btn btn-primary btn-lg">Novo Chamado</a>
-                        <div class="d-flex align-items-center mb-3">
-                            @if (ViewData["CurrentFilter"] == null)
-                            {
-                            <form asp-controller="Dashboard" asp-action="Home" method="get">
-                                <div class="input-group">
-                                    <span class="input-group-text" id="basic-addon1">ID</span>
-                                    <input type="text" class="form-control" placeholder="ID do chamado" name="searcheId" value="@ViewData["CurrentFilter"]" aria-label="ID" aria-describedby="basic-addon1">
-                                    <input type="submit" value="Pesquisar" class="btn btn-secondary" />
-                                </div>
-                            </form>
-                            }else{
-                            <a asp-action="Home" class="ms-3">voltar para Lista</a>
-                            }
-                        </div>
-                    </div>
-                <div class="card">
-                    <div style="padding: 1rem 2rem;">
-                        <table class="table  table-hover">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.CallsId)
-                                    </th>
-                                    <th width="100px">
-                                        @Html.DisplayNameFor(model => model.Status)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Name)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Phone)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Title)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.Decription)
-                                    </th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.CallsId)
-                                        </td>
-                                        <td>
-                                            @if (item.Status == "Aberto")
-                                            {
-                                                <span class="badge text-bg-success bg-success">
-                                                    @Html.DisplayFor(modelItem => item.Status)
-                                                </span>
-                                            }
-                                            @if (item.Status == "Andamento")
-                                            {
-                                                <span class="badge text-bg-warning bg-warning">
-                                                    @Html.DisplayFor(modelItem => item.Status)
-                                                </span>
-                                            }
-                                            @if (item.Status == "Fechado")
-                                            {
-                                                <span class="badge text-bg-dark bg-dark">
-                                                    @Html.DisplayFor(modelItem => item.Status)
-                                                </span>
-                                            }
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Name)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Phone)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Title)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Decription)
-                                        </td>
-                                        <td class="crud-button" style="text-align: end;">
-                                            <a class="icon-edit" asp-action="DetailsCalls" asp-route-id="@item.CallsId">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
-                                                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                                                    <path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
-                                                </svg>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    }
-</main><!-- End #main -->
+</main>
 @section Scripts {
+    @if(User.IsInRole("Administrador")){
     <script type="text/javascript">
             document.addEventListener("DOMContentLoaded", () => {
                 new Chart(document.querySelector('#pieChart'), {
@@ -158,7 +34,7 @@
                         ],
                         datasets: [{
                             label: 'My First Dataset',
-                            data: [@user.Ramal, 35, 68],
+                            data: [@Model.Aberto, @Model.Andamnto, @Model.Fechado],
                             backgroundColor: [
                                 'rgb(255, 99, 132)',
                                 'rgb(54, 162, 235)',
@@ -170,6 +46,33 @@
                 });
             });
     </script>
+    }
+    @if (User.IsInRole("Operador"))
+    {
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", () => {
+            new Chart(document.querySelector('#pieChart'), {
+                type: 'pie',
+                data: {
+                    labels: [
+                        'Andamento',
+                        'Fechado'
+                    ],
+                    datasets: [{
+                        label: 'My First Dataset',
+                        data: [@Model.Andamnto, @Model.Fechado],
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 205, 86)'
+                        ],
+                        hoverOffset: 4
+                    }]
+                }
+            });
+        });
+    </script>
+    }
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
