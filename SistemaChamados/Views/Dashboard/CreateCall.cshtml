@@ -34,7 +34,7 @@
                             <input type="hidden" value="@user.Id" asp-for="AspNetUsersId" />
 
                             <div class="form-floating mb-3">
-                                <select class="form-select" asp-for="Status" id="floatingSelect" aria-label="Floating label select example">
+                                <select class="form-select" asp-for="Status" id="floatingSelect" aria-label="Floating label select example" disabled>
                                     @foreach (var item in ViewBag.Status)
                                     {
                                         if (item == "Aberto")
