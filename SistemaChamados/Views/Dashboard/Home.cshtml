@@ -21,59 +21,153 @@
         </div>
 </main>
 @section Scripts {
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
     @if(User.IsInRole("Administrador")){
     <script type="text/javascript">
-            document.addEventListener("DOMContentLoaded", () => {
-                new Chart(document.querySelector('#pieChart'), {
-                    type: 'pie',
-                    data: {
-                        labels: [
-                            'Aberto',
-                            'Andamento',
-                            'Fechado'
-                        ],
-                        datasets: [{
-                            label: 'My First Dataset',
-                            data: [@Model.Aberto, @Model.Andamnto, @Model.Fechado],
-                            backgroundColor: [
-                                'rgb(255, 99, 132)',
-                                'rgb(54, 162, 235)',
-                                'rgb(255, 205, 86)'
-                            ],
-                            hoverOffset: 4
-                        }]
+        const data = {
+            labels: ['Aberto','Andamento','Fechado'],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [@Model.Aberto, @Model.Andamnto, @Model.Fechado],
+                backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)'
+                ],
+                hoverOffset: 4
+            }]
+        };
+
+        const alwaysShowTooltip = {
+            id: 'alwaysShowTooltip',
+            afterDraw(chart, args, options) {
+                const { ctx } = chart;
+                ctx.save();
+
+                chart.data.datasets.forEach((dataset, i) => {
+                    chart.getDatasetMeta(i).data.forEach((datapoint, index) => {
+                        const { x, y } = datapoint.tooltipPosition();
+                        //console.log(datapoint.tooltipPosition());
+
+                        const text = chart.data.labels[index] + ': ' + chart.data.datasets[i].data[index];
+                        const textWidth = ctx.measureText(text).width;
+
+                        ctx.fillStyle = 'rgba(0,0,0,0.8)';
+                        ctx.fillRect(x - ((textWidth + 10) / 2), y - 25, textWidth + 10, 20);
+
+                        ctx.borderRadius = 3;
+                        ctx.beginPath();
+                        ctx.moveTo(x, y);
+                        ctx.lineTo(x - 5, y - 5);
+                        ctx.lineTo(x + 5, y - 5);
+                        ctx.fill();
+                        ctx.restore();
+
+                        ctx.font = '12px Arial';
+                        ctx.fillStyle = 'White';
+                        ctx.fillText(text, x - (textWidth / 2), y - 15);
+                        ctx.restore();
+
+                    })
+                })
+            }
+        };
+
+        const config = {
+            type: 'pie',
+            data,
+            options: {
+                plugins: {
+                    tooltip: {
+                        enabled: false,
+                    },
+                    legend: {
+                        display: true,
                     }
-                });
-            });
+                }
+            },
+            plugins: [alwaysShowTooltip]
+        };
+
+        const myChart = new Chart(
+            document.getElementById('pieChart'),
+            config
+        );
     </script>
     }
     @if (User.IsInRole("Operador"))
     {
     <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", () => {
-            new Chart(document.querySelector('#pieChart'), {
-                type: 'pie',
-                data: {
-                    labels: [
-                        'Andamento',
-                        'Fechado'
-                    ],
-                    datasets: [{
-                        label: 'My First Dataset',
-                        data: [@Model.Andamnto, @Model.Fechado],
-                        backgroundColor: [
-                            'rgb(255, 99, 132)',
-                            'rgb(54, 162, 235)',
-                            'rgb(255, 205, 86)'
-                        ],
-                        hoverOffset: 4
-                    }]
+        const data = {
+                labels: ['Andamento','Fechado'],
+            datasets: [{
+                label: 'My First Dataset',
+                data: [@Model.Andamnto, @Model.Fechado],
+                backgroundColor: [
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)'
+                ],
+                hoverOffset: 4
+            }]
+        };
+
+        const alwaysShowTooltip = {
+            id: 'alwaysShowTooltip',
+            afterDraw(chart, args, options) {
+                const { ctx } = chart;
+                ctx.save();
+
+                chart.data.datasets.forEach((dataset, i) => {
+                    chart.getDatasetMeta(i).data.forEach((datapoint, index) => {
+                        const { x, y } = datapoint.tooltipPosition();
+                        //console.log(datapoint.tooltipPosition());
+
+                        const text = chart.data.labels[index]+ ': '+ chart.data.datasets[i].data[index];
+                        const textWidth = ctx.measureText(text).width;
+
+                        ctx.fillStyle = 'rgba(0,0,0,0.8)';
+                        ctx.fillRect(x - ((textWidth +10) / 2), y - 25, textWidth + 10, 20);
+
+                        ctx.borderRadius = 3;
+                        ctx.beginPath();
+                        ctx.moveTo(x, y);
+                        ctx.lineTo(x - 5, y - 5);
+                        ctx.lineTo(x + 5, y - 5);
+                        ctx.fill();
+                        ctx.restore();
+
+                        ctx.font = '12px Arial';
+                        ctx.fillStyle = 'White';
+                        ctx.fillText(text, x - (textWidth / 2), y - 15);
+                        ctx.restore();
+
+                    })
+                })
+            }
+        };
+
+        const config = {
+            type: 'pie',
+            data,
+            options: {
+                plugins: {
+                    tooltip: {
+                        enabled: false,
+                    },
+                    legend: {
+                        display: true,
+                    }
                 }
-            });
-        });
+            },
+            plugins: [alwaysShowTooltip]
+        };
+
+        const myChart = new Chart(
+            document.getElementById('pieChart'),
+            config
+        );
     </script>
     }
-@{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
 }
