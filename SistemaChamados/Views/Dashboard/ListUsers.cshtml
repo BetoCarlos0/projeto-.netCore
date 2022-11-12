@@ -11,18 +11,18 @@
 
 <main id="main" class="main">
 
-    <div class="pagetitle col-lg-10" style="display: flex; flex-direction: column; margin: 0 auto;">
-        <h1>@ViewData["Title"]</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a asp-action="Home">Home</a></li>
-                <li class="breadcrumb-item active">@ViewData["Title"]</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
     <section class="section">
         <div class="row" style="justify-content: center;">
-            <div class="col-lg-10">
+            <div class="pagetitle col-lg-11">
+                <h1>@ViewData["Title"]</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-action="Home">Home</a></li>
+                        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                    </ol>
+                </nav>
+            </div><!-- End Page Title -->
+            <div class="col-lg-11">
                 <a type="button" asp-action="CreateUser" class="mb-3 btn btn-primary btn-lg">Novo Usuário</a>
                 <div class="card">
                     <div style="padding: 1rem 2rem;">
@@ -47,6 +47,7 @@
                                     <th>
                                         Cargo
                                     </th>
+                                    <th></th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -74,9 +75,16 @@
                                             <td>
                                                 @((await UserManager.GetRolesAsync(item)).FirstOrDefault())
                                             </td>
+                                            <td class="crud-button" style="text-align: end;">
+                                                <a class="icon-edit" asp-action="DetailsUser" asp-route-id="@item.Id">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                                                        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
+                                                    </svg>
+                                                </a>
+                                            </td>
 
                                             <td class="crud-button" style="text-align: end;">
-                                                <a class="icon-edit me-3" asp-action="EditUser" asp-route-id="@item.Id">
+                                                <a class="icon-edit" asp-action="EditUser" asp-route-id="@item.Id">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                                         <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                                         <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />

@@ -5,19 +5,19 @@
 }
 <main id="main" class="main">
 
-    <div class="pagetitle col-lg-11" style="display: flex; flex-direction: column; margin: 0 auto;">
-        <h1>Editar Usuário</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a asp-action="Home">Home</a></li>
-                <li class="breadcrumb-item"><a asp-action="ListUsers">Usuários</a></li>
-                <li class="breadcrumb-item active">Editar Usuário</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
     <section class="section">
         <div class="row">
-            <div class="col-lg-12 d-flex justify-content-around">
+            <div class="pagetitle col-lg-11 ms-4">
+                <h1>Editar Usuário</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-action="Home">Home</a></li>
+                        <li class="breadcrumb-item"><a asp-action="ListUsers">Usuários</a></li>
+                        <li class="breadcrumb-item active">Editar Usuário</li>
+                    </ol>
+                </nav>
+            </div><!-- End Page Title -->
+            <div class="col-lg-11 d-flex justify-content-around">
                 <div class="col-7">
                     <div class="card">
                         <div class="card-body">
@@ -77,7 +77,7 @@
                                         }
 
                                     </select>
-                                    <label for="floatingSelect" asp-for="Role">Cargo</label>
+                                    <label for="floatingSelect" asp-for="Role">Tipo da Conta</label>
                                     <span asp-validation-for="Role" class="text-danger"></span>
                                 </div>
 
@@ -147,8 +147,8 @@
                     </div>
                 </div>
             </div>
-            <a asp-action="ListUsers" type="button" class="btn btn-secondary btn-sm w-auto m-4">Voltar</a>
         </div>
+            <a asp-action="ListUsers" type="button" class="btn btn-secondary btn-sm w-auto m-4">Voltar</a>
     </section>
 </main><!-- End #main -->
 @section Scripts {

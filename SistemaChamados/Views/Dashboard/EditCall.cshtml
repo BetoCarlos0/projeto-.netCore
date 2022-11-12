@@ -6,18 +6,18 @@
 }
 <main id="main" class="main">
 
-    <div class="pagetitle col-lg-4" style="display: flex; flex-direction: column; margin: 0 auto;">
-        <h1>@ViewData["Title"]</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a asp-action="Home">Home</a></li>
-                <li class="breadcrumb-item"><a asp-action="ListCalls">Chamados</a></li>
-                <li class="breadcrumb-item active">@ViewData["Title"]</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
     <section class="section">
-        <div class="row" style="justify-content: center;">
+        <div class="row" style="flex-direction: column; align-items: center;">
+            <div class="pagetitle col-lg-4">
+                <h1>@ViewData["Title"]</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-action="Home">Home</a></li>
+                        <li class="breadcrumb-item"><a asp-action="ListCalls">Chamados</a></li>
+                        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                    </ol>
+                </nav>
+            </div><!-- End Page Title -->
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body">
@@ -26,13 +26,9 @@
                         <form asp-controller="Dashboard" asp-action="EditCall" method="post" class="row">
                             <input type="hidden" value="@Model.CallsId" asp-for="CallsId" />
                             <input type="hidden" value="@Model.AspNetUsersId" asp-for="AspNetUsersId" />
-                            <input type="hidden" value="@Model.Name" asp-for="Name" />
-                            <input type="hidden" value="@Model.Phone" asp-for="Phone" />
-                            <input type="hidden" value="@Model.Ramal" asp-for="Ramal" />
 
                             <div class="form-floating mb-3">
                                 <select class="form-select" asp-for="Status" id="floatingSelect" aria-label="Floating label select example">
-                                    <option selected>Status</option>
                                     @foreach (var item in ViewBag.Status){
                                         if (item == "Aberto"){
                                             <option selected value="@item">@item</option>
@@ -40,7 +36,7 @@
                                             <option value="@item">@item</option>
                                     }}
                                 </select>
-                                <label for="floatingSelect" asp-for="Status">Cargo</label>
+                                <label for="floatingSelect" asp-for="Status">Status</label>
                                 <span asp-validation-for="Status" class="text-danger"></span>
                             </div>
                             @if (User.IsInRole("Administrador")){
@@ -62,6 +58,9 @@
                                 <span asp-validation-for="Ramal" class="text-danger"></span>
                             </div>
                             }else{
+                                <input type="hidden" value="@Model.Name" asp-for="Name" />
+                                <input type="hidden" value="@Model.Phone" asp-for="Phone" />
+                                <input type="hidden" value="@Model.Ramal" asp-for="Ramal" />
                             <div class="form-floating mb-3">
                                     <input id="floatingName" value="@Model.Name" class="form-control" placeholder="Name" disabled/>
                                 <label for="floatingName">Nome</label>
@@ -96,7 +95,6 @@
                             </div>
                             <div class="form-floating mb-3">
                                 <select class="form-select" asp-for="Operador" id="floatingSelect" aria-label="Floating label select example">
-                                    <option selected>Selecionar o Operador</option>
                                     @foreach (var item in ViewBag.Operador)
                                     {
                                         if (Model.Operador != string.Empty){

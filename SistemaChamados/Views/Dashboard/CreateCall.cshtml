@@ -10,20 +10,21 @@
 }
 <main id="main" class="main">
 
-    <div class="pagetitle col-lg-4" style="display: flex; flex-direction: column; margin: 0 auto;">
-        <h1>@ViewData["Title"]</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a asp-action="Home">Home</a></li>
-                @if (!User.IsInRole("Usuario")){
-                    <li class="breadcrumb-item"><a asp-action="ListCalls">Chamados</a></li>
-                }
-                <li class="breadcrumb-item active">@ViewData["Title"]</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
     <section class="section">
-        <div class="row" style="justify-content: center;">
+        <div class="row" style="flex-direction: column; align-items: center;">
+            <div class="pagetitle col-lg-4">
+                <h1>@ViewData["Title"]</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-action="Home">Home</a></li>
+                        @if (!User.IsInRole("Usuario"))
+                        {
+                            <li class="breadcrumb-item"><a asp-action="ListCalls">Chamados</a></li>
+                        }
+                        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                    </ol>
+                </nav>
+            </div><!-- End Page Title -->
             <div class="col-lg-4">
                 <div class="card mb-3">
                     <div class="card-body">
@@ -31,20 +32,18 @@
                         <!-- Multi Columns Form -->
                         <form asp-controller="Dashboard" asp-action="CreateCall" method="post" class="row">
                             <input type="hidden" value="@user.Id" asp-for="AspNetUsersId" />
-                            <input type="hidden" value="@user.Name" asp-for="Name" />
-                            <input type="hidden" value="@user.PhoneNumber" asp-for="Phone" />
-                            <input type="hidden" value="@user.Ramal" asp-for="Ramal" />
 
                             <div class="form-floating mb-3">
                                 <select class="form-select" asp-for="Status" id="floatingSelect" aria-label="Floating label select example">
-                                    <option selected>Status</option>
                                     @foreach (var item in ViewBag.Status)
                                     {
                                         if (item == "Aberto")
                                         {
                                             <option selected value="@item">@item</option>
-                                        }else{
-                                        <option value="@item">@item</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item">@item</option>
                                         }
                                     }
                                 </select>
@@ -52,21 +51,46 @@
                                 <span asp-validation-for="Status" class="text-danger"></span>
                             </div>
 
-                            <div class="form-floating mb-3">
-                                <input id="floatingName" class="form-control" value="@user.Name" placeholder="Nome" disabled />
-                                <label for="floatingName">Nome</label>
-                            </div>
+                            @if (User.IsInRole("Administrador"))
+                            {
+                                <div class="form-floating mb-3">
+                                    <input id="floatingName" asp-for="Name" class="form-control" placeholder="Name" />
+                                    <label for="floatingName" asp-for="Name"></label>
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
 
-                            <div class="form-floating mb-3">
-                                <input id="floatingEmail" class="form-control" value="@user.PhoneNumber" placeholder="Telefone" disabled />
-                                <label for="floatingEmail">Telefone</label>
-                            </div>
+                                <div class="form-floating mb-3">
+                                    <input id="floatingEmail" asp-for="Phone" class="form-control" placeholder="Phone" />
+                                    <label for="floatingEmail" asp-for="Phone"></label>
+                                    <span asp-validation-for="Phone" class="text-danger"></span>
+                                </div>
 
-                            <div class="form-floating mb-3">
-                                <input id="floatingBith" class="form-control" value="@user.Ramal" placeholder="Ramal" disabled/>
-                                <label for="floatingBith">Ramal</label>
-                            </div>
+                                <div class="form-floating mb-3">
+                                    <input id="floatingBith" asp-for="Ramal" class="form-control" placeholder="Ramal" />
+                                    <label for="floatingBith" asp-for="Ramal"></label>
+                                    <span asp-validation-for="Ramal" class="text-danger"></span>
+                                </div>
+                            }
+                            else
+                            {
+                                <input type="hidden" value="@user.Name" asp-for="Name" />
+                                <input type="hidden" value="@user.PhoneNumber" asp-for="Phone" />
+                                <input type="hidden" value="@user.Ramal" asp-for="Ramal" />
+                                <div class="form-floating mb-3">
+                                    <input id="floatingName" value="@user.Name" class="form-control" placeholder="Name" disabled />
+                                    <label for="floatingName">Nome</label>
+                                </div>
 
+                                <div class="form-floating mb-3">
+                                    <input id="floatingEmail" value="@user.PhoneNumber" class="form-control" placeholder="Phone" disabled />
+                                    <label for="floatingEmail">Telefone</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input id="floatingBith" value="@user.Ramal" class="form-control" placeholder="Ramal" disabled />
+                                    <label for="floatingBith">Ramal</label>
+                                </div>
+                            }
                             <div class="form-floating mb-3">
                                 <input id="floatingPhone" asp-for="Title" class="form-control" placeholder="Title" />
                                 <label for="floatingPhone" asp-for="Title"></label>
@@ -78,16 +102,19 @@
                                 <label for="floatingDepar" asp-for="Decription"></label>
                                 <span asp-validation-for="Decription" class="text-danger"></span>
                             </div>
-                            
+
                             <div class="col-12">
                                 <button class="btn btn-primary w-100" type="submit">Criar Chamado</button>
                             </div>
                         </form>
                     </div>
                 </div>
-                @if (User.IsInRole("Usuario")){
+                @if (User.IsInRole("Usuario"))
+                {
                     <a asp-controller="Dashboard" asp-action="Home" type="button" class="btn btn-secondary btn-sm">Voltar</a>
-                }else{
+                }
+                else
+                {
                     <a asp-controller="Dashboard" asp-action="ListCalls" type="button" class="btn btn-secondary btn-sm">Voltar</a>
                 }
             </div>
@@ -95,7 +122,7 @@
     </section>
 </main><!-- End #main -->
 @section Scripts {
-@{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

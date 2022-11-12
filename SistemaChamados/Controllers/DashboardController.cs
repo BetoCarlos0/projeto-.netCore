@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SistemaChamados.Data;
 using SistemaChamados.Data.Identity;
 using SistemaChamados.Models;
@@ -46,6 +47,10 @@ namespace SistemaChamados.Controllers
                     return View(calls);
                 }
             }
+            if (User.IsInRole("Administrador"))
+            {
+                ViewBag.Dados = new int[] { 3, 4, 9 };
+            }
             return View();
         }
 
@@ -55,6 +60,14 @@ namespace SistemaChamados.Controllers
             ViewBag.Roles = _roleManager.Roles.ToList();
 
             return View(await _userManager.Users.ToListAsync());
+        }
+
+        public async Task<IActionResult> detailsUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+            user.Role = role;
+            return View(user);
         }
 
         [Authorize(Roles = "Administrador")]
@@ -172,34 +185,40 @@ namespace SistemaChamados.Controllers
         }
 
         [Authorize(Roles = "Administrador, Operador")]
-        public async Task<IActionResult> ListCalls(string currentFilter,
-                                            string searchString,
-                                            int? pageNumber)
+        public async Task<IActionResult> ListCalls(int searcheId)
         {
-            if (searchString != null)
+            var calls = _context.Calls.AsQueryable();
+
+            if (User.IsInRole("Operador"))
             {
-                pageNumber = 1;
+                var user = await _userManager.GetUserAsync(User);
+                calls = calls.Where(x => x.Operador == user.Name || x.Operador == string.Empty).AsQueryable();
+
+            }
+            if (searcheId != 0)
+            {
+                ViewData["CurrentFilter"] = searcheId;
+                var call = calls.Where(s => s.CallsId.Equals(searcheId));
+                return View(call);
             }
             else
             {
-                searchString = currentFilter;
+                ViewData["CurrentFilter"] = null;
+                return View(calls.AsEnumerable());
             }
-            ViewData["CurrentFilter"] = searchString;
-            int pageSize = 3;
-            var calls = _context.Calls.AsQueryable();
+        }
 
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                calls = calls.Where(s => s.CallsId.ToString().Contains(searchString));
-            }
-
-            return View(await PaginatedList<Calls>.CreateAsync(calls.AsNoTracking(), pageNumber ?? 1, pageSize));
+        public async Task<IActionResult> DetailsCalls(int id)
+        {
+            var call = await _context.Calls.FindAsync(id);
+            return View(call);
         }
 
         [HttpGet]
-        public IActionResult CreateCall()
+        public async Task<IActionResult> CreateCall()
         {            
             ViewBag.Status = Enum.GetNames(typeof(Status));
+            //var user = await _userManager.GetUserAsync(User);
 
             return View();
         }
@@ -245,6 +264,9 @@ namespace SistemaChamados.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditCall([Bind("CallsId, AspNetUsersId, Name, Ramal, Phone, Status, Decription, Title, Solution, Operador")] Calls model)
         {
+            if (model.Operador == "Selecionar o Operador")
+                model.Operador = null;
+
             ViewBag.Status = Enum.GetNames(typeof(Status));
             if (ModelState.IsValid)
             {

@@ -1,0 +1,113 @@
+﻿@model SistemaChamados.Models.Calls
+@{
+    ViewData["Title"] = "Detalhes Chamado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main id="main" class="main">
+
+    <section class="section">
+        <div class="row" style="justify-content: center;">
+            <div class="pagetitle col-lg-7">
+                <h1>@ViewData["Title"]</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-action="Home">Home</a></li>
+                        @if (!User.IsInRole("Usuario"))
+                        {
+                            <li class="breadcrumb-item"><a asp-action="ListCalls">Chamados</a></li>
+                        }
+                        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                    </ol>
+                </nav>
+            </div><!-- End Page Title -->
+            <div class="col-lg-7">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <br />
+                        <dl class="row">
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.CallsId)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.CallsId)
+                            </dd>
+                            <hr>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Status)
+                            </dt>
+
+                            <dd class="col-sm-8">
+                                @if (Model.Status == "Aberto")
+                                {
+                                    <span class="badge text-bg-success bg-success">
+                                        @Html.DisplayFor(model => model.Status)
+                                    </span>
+                                }
+                                @if (Model.Status == "Andamento")
+                                {
+                                    <span class="badge text-bg-warning bg-warning">
+                                        @Html.DisplayFor(model => model.Status)
+                                    </span>
+                                }
+                                @if (Model.Status == "Fechado")
+                                {
+                                    <span class="badge text-bg-dark bg-dark">
+                                        @Html.DisplayFor(model => model.Status)
+                                    </span>
+                                }
+                            </dd>
+                            <hr>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Name)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.Name)
+                            </dd>
+                            <hr>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Phone)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.Phone)
+                            </dd>
+                            <hr>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Title)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.Title)
+                            </dd>
+                            <hr>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Decription)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.Decription)
+                            </dd>
+                            <hr>
+                            <dt class="col-sm-4" style="margin-bottom: .5rem;">
+                                @Html.DisplayNameFor(model => model.Solution)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.Solution)
+                            </dd>
+                            <hr>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Operador)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.Operador)
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                @if (User.IsInRole("Usuario")){
+                    <a asp-controller="Dashboard" asp-action="Home" type="button" class="btn btn-secondary btn-sm">Voltar</a>
+                }else{
+                    <a asp-controller="Dashboard" asp-action="ListCalls" type="button" class="btn btn-secondary btn-sm">Voltar</a>
+                }
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->

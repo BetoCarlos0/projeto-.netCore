@@ -1,0 +1,95 @@
+﻿@model SistemaChamados.Data.Identity.UserCustom
+@{
+    ViewData["Title"] = "Detalhes do Usuário";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main id="main" class="main">
+
+    <section class="section">
+        <div class="row" style="justify-content: center;">
+            <div class="pagetitle col-lg-7">
+                <h1>@ViewData["Title"]</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a asp-action="Home">Home</a></li>
+                        <li class="breadcrumb-item"><a asp-action="ListUsers">Usuários</a></li>
+                        <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                    </ol>
+                </nav>
+            </div><!-- End Page Title -->
+            <div class="col-lg-7">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <br />
+                        <dl class="row">
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Name)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.Name)
+                            </dd>
+                            <hr>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.CpfNumber)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.CpfNumber)
+                            </dd>
+                            <hr>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Email)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.Email)
+                            </dd>
+                            <hr>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.PhoneNumber)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.PhoneNumber)
+                            </dd>
+                            <hr>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.BirthDate)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.BirthDate)
+                            </dd>
+                            <hr>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Department)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.Department)
+                            </dd>
+                            <hr>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Supervisor)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.Supervisor)
+                            </dd>
+                            <hr>
+                            <dt class="col-sm-4">
+                                @Html.DisplayNameFor(model => model.Ramal)
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.Ramal)
+                            </dd>
+                            <hr>
+                            <dt class="col-sm-4">
+                                Tipo da Conta
+                            </dt>
+                            <dd class="col-sm-8">
+                                @Html.DisplayFor(model => model.Role)
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <a asp-action="ListUsers" type="button" class="btn btn-secondary btn-sm">Voltar</a>
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->
