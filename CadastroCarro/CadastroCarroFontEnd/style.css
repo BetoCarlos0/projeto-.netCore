@@ -39,4 +39,19 @@
     border: none;
     border-radius: 5px;
     box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-  }
+}
+
+.ver {
+    width: 100px;
+}
+.edita {
+    width: 115px;
+}
+.delete {
+    width: 125px;
+}
+
+tbody tr {
+    vertical-align: middle;
+}
+

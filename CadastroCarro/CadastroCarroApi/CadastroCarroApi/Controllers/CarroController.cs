@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace CadastroCarroApi.Controllers
 {
-    [EnableCors("AllowSpecificOrigin")]
+    [EnableCors("_myAllowSpecificOrigins")]
     [Route("api/[controller]")]
     [ApiController]
     public class CarroController : ControllerBase
