@@ -107,28 +107,29 @@ async function getPorId(id) {
 
 // POST e PUT
 enviar.onclick = async () => {
-  const inputModelo = document.querySelector("#floatingModel").value;
-  const inputMarca = document.querySelector("#floatingMarca").value;
-  const inputAno = document.querySelector("#floatingAno").value;
-  const inputCor = document.querySelector("#floatingCor").value;
-
   const carro = {
-    modelo: inputModelo,
-    marca: inputMarca,
-    ano: inputAno,
-    cor: inputCor
+    modelo: inputModelo.value,
+    marca: inputMarca.value,
+    ano: inputAno.value,
+    cor: inputCor.value
   }
   if (inputId.value != 0){
     carro.id = inputId.value
-    console.log(carro)
-    const response = await fetch(`${url}/${inputId.value}`, writeServer('PUT', carro));
+    await fetch(`${url}/${inputId.value}`, writeServer('PUT', carro));
+    
+    inputId.value = 0
+    inputModelo.value = null
+    inputMarca.value = null
+    inputAno.value = 0
+    inputCor.value = null
   }else{
-    const response = await fetch(url, writeServer('POST', carro));
+    await fetch(url, writeServer('POST', carro));
   }
 
   loadCarros()
 }
 
+// DELETE 
 deletar.onclick = async () => {
   console.log(idDelete)
   await fetch(`${url}/${idDelete}`, writeServer('DELETE'))
