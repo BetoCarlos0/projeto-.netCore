@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VCommerce.ProductApi", "VCommerce.ProductApi\VCommerce.ProductApi.csproj", "{B9E40D06-0162-4319-A16E-E82AF7E26F3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VCommerce.ProductApi", "VCommerce.ProductApi\VCommerce.ProductApi.csproj", "{B9E40D06-0162-4319-A16E-E82AF7E26F3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VCommerce.Web", "VCommerce.Web\VCommerce.Web.csproj", "{88AB18C6-D10B-4224-8EB5-CB97E7EFA98E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VCommerce.Web", "VCommerce.Web\VCommerce.Web.csproj", "{88AB18C6-D10B-4224-8EB5-CB97E7EFA98E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{4F1B9696-978E-44C6-914B-FD3456089EB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{0B91E920-CE28-4707-A496-1F8A31E5515B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VCommerce.IdentityServer", "VCommerce.IdentityServer\VCommerce.IdentityServer.csproj", "{1A4E7F01-5FDD-40E2-8C7D-5D7BEBEA1811}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +27,18 @@ Global
 		{88AB18C6-D10B-4224-8EB5-CB97E7EFA98E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88AB18C6-D10B-4224-8EB5-CB97E7EFA98E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88AB18C6-D10B-4224-8EB5-CB97E7EFA98E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A4E7F01-5FDD-40E2-8C7D-5D7BEBEA1811}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A4E7F01-5FDD-40E2-8C7D-5D7BEBEA1811}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A4E7F01-5FDD-40E2-8C7D-5D7BEBEA1811}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A4E7F01-5FDD-40E2-8C7D-5D7BEBEA1811}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B9E40D06-0162-4319-A16E-E82AF7E26F3D} = {0B91E920-CE28-4707-A496-1F8A31E5515B}
+		{88AB18C6-D10B-4224-8EB5-CB97E7EFA98E} = {4F1B9696-978E-44C6-914B-FD3456089EB8}
+		{1A4E7F01-5FDD-40E2-8C7D-5D7BEBEA1811} = {0B91E920-CE28-4707-A496-1F8A31E5515B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CDFFD9A0-BAB0-4718-B879-B1A67011D2A6}
