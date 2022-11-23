@@ -17,6 +17,10 @@ public class ProductViewModel
     [Required]
     public string? ImageURL { get; set; }
     public string? CategoryName { get; set; }
+
+    [Range(1, 100)]
+    public int Quantity { get; set; } = 1;
+
     [Display(Name = "Categorias")]
     public int CategoryId { get; set; }
 }
