@@ -9,12 +9,12 @@ namespace VCommerce.Web.Controllers;
 public class CartController : Controller
 {
     private readonly ICartService _cartService;
-    //private readonly ICouponService _couponService;
+    private readonly ICouponService _couponService;
 
-    public CartController(ICartService cartService/*, ICouponService couponService*/)
+    public CartController(ICartService cartService, ICouponService couponService)
     {
         _cartService = cartService;
-        //_couponService = couponService;
+        _couponService = couponService;
     }
 
     [HttpGet]
@@ -86,8 +86,6 @@ public class CartController : Controller
         return View(cartVM);
     }
 
-
-
     private async Task<CartViewModel?> GetCartByUser()
     {
 
@@ -95,15 +93,15 @@ public class CartController : Controller
 
         if (cart?.CartHeader is not null)
         {
-            //if (!string.IsNullOrEmpty(cart.CartHeader.CouponCode))
-            //{
-            //    var coupon = await _couponService.GetDiscountCoupon(cart.CartHeader.CouponCode,
-            //                                                        await GetAccessToken());
-            //    if (coupon?.CouponCode is not null)
-            //    {
-            //        cart.CartHeader.Discount = coupon.Discount;
-            //    }
-            //}
+            if (!string.IsNullOrEmpty(cart.CartHeader.CouponCode))
+            {
+                var coupon = await _couponService.GetDiscountCoupon(cart.CartHeader.CouponCode,
+                                                                    await GetAccessToken());
+                if (coupon?.CouponCode is not null)
+                {
+                    cart.CartHeader.Discount = coupon.Discount;
+                }
+            }
             foreach (var item in cart.CartItems)
             {
                 cart.CartHeader.TotalAmount += (item.Product.Price * item.Quantity);

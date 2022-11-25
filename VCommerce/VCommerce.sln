@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VCommerce.IdentityServer", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VCommerce.CartApi", "VCommerce.CartApi\VCommerce.CartApi.csproj", "{D950ABF1-1C2B-49E6-BDBD-D0002B75D399}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VCommerce.DiscountApi", "VCommerce.DiscountApi\VCommerce.DiscountApi.csproj", "{FE82B29F-A77D-410B-91B5-BBA757F4BD5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VCommerce.DiscountApi", "VCommerce.DiscountApi\VCommerce.DiscountApi.csproj", "{FE82B29F-A77D-410B-91B5-BBA757F4BD5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
